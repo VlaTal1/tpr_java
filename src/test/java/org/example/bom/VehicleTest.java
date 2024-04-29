@@ -1,6 +1,5 @@
-package org.example.vehicle;
+package org.example.bom;
 
-import org.example.bom.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
