@@ -191,6 +191,13 @@ databaseChangeLog:
                     references: MODEL(ID)
                     deleteCascade: false
               - column:
+                  name: VEHICLE_TYPE_ID
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: FK_VEHICLE_VEHICLE_TYPE
+                    references: VEHICLE_TYPE(ID)
+                    deleteCascade: false
+              - column:
                   name: COLOR_ID
                   type: BIGINT
                   constraints:
