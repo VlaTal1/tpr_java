@@ -1,0 +1,337 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.1
+      author: VlaTal
+      changes:
+        - createSequence:
+            sequenceName: COUNTRY_SEQ_ID
+      rollback:
+        - dropSequence:
+            sequenceName: COUNTRY_SEQ_ID
+  - changeSet:
+      id: 1.2
+      author: VlaTal
+      changes:
+        - createTable:
+            tableName: COUNTRY
+            columns:
+              - column:
+                  name: ID
+                  type: bigint
+                  defaultValueSequenceNext: COUNTRY_SEQ_ID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: NAME
+                  type: VARCHAR
+      rollback:
+        - dropTable:
+            tableName: COUNTRY
+
+  - changeSet:
+      id: 2.1
+      author: VlaTal
+      changes:
+        - createSequence:
+            sequenceName: MANUFACTURER_SEQ_ID
+      rollback:
+        - dropSequence:
+            sequenceName: MANUFACTURER_SEQ_ID
+  - changeSet:
+      id: 2.2
+      author: VlaTal
+      changes:
+        - createTable:
+            tableName: MANUFACTURER
+            columns:
+              - column:
+                  name: ID
+                  type: bigint
+                  defaultValueSequenceNext: MANUFACTURER_SEQ_ID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: NAME
+                  type: VARCHAR
+              - column:
+                  name: COUNTRY_ID
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: FK_MANUFACTURER_COUNTRY
+                    references: COUNTRY(ID)
+                    deleteCascade: false
+      rollback:
+        - dropTable:
+            tableName: MANUFACTURER
+
+  - changeSet:
+      id: 3.1
+      author: VlaTal
+      changes:
+        - createSequence:
+            sequenceName: MODEL_SEQ_ID
+      rollback:
+        - dropSequence:
+            sequenceName: MODEL_SEQ_ID
+  - changeSet:
+      id: 3.2
+      author: VlaTal
+      changes:
+        - createTable:
+            tableName: MODEL
+            columns:
+              - column:
+                  name: ID
+                  type: bigint
+                  defaultValueSequenceNext: MODEL_SEQ_ID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: NAME
+                  type: VARCHAR
+              - column:
+                  name: MANUFACTURER_ID
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: FK_MODEL_MANUFACTURER
+                    references: MANUFACTURER(ID)
+                    deleteCascade: false
+      rollback:
+        - dropTable:
+            tableName: MODEL
+
+  - changeSet:
+      id: 4.1
+      author: VlaTal
+      changes:
+        - createSequence:
+            sequenceName: COLOR_SEQ_ID
+      rollback:
+        - dropSequence:
+            sequenceName: COLOR_SEQ_ID
+  - changeSet:
+      id: 4.2
+      author: VlaTal
+      changes:
+        - createTable:
+            tableName: COLOR
+            columns:
+              - column:
+                  name: ID
+                  type: bigint
+                  defaultValueSequenceNext: COLOR_SEQ_ID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: NAME
+                  type: VARCHAR
+      rollback:
+        - dropTable:
+            tableName: COLOR
+
+  - changeSet:
+      id: 5.1
+      author: VlaTal
+      changes:
+        - createSequence:
+            sequenceName: VEHICLE_TYPE_SEQ_ID
+      rollback:
+        - dropSequence:
+            sequenceName: VEHICLE_TYPE_SEQ_ID
+  - changeSet:
+      id: 5.2
+      author: VlaTal
+      changes:
+        - createTable:
+            tableName: VEHICLE_TYPE
+            columns:
+              - column:
+                  name: ID
+                  type: bigint
+                  defaultValueSequenceNext: VEHICLE_TYPE_SEQ_ID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: NAME
+                  type: VARCHAR
+      rollback:
+        - dropTable:
+            tableName: VEHICLE_TYPE
+
+  - changeSet:
+      id: 6.1
+      author: VlaTal
+      changes:
+        - createSequence:
+            sequenceName: VEHICLE_SEQ_ID
+      rollback:
+        - dropSequence:
+            sequenceName: VEHICLE_SEQ_ID
+  - changeSet:
+      id: 6.2
+      author: VlaTal
+      changes:
+        - createTable:
+            tableName: VEHICLE
+            columns:
+              - column:
+                  name: ID
+                  type: bigint
+                  defaultValueSequenceNext: VEHICLE_SEQ_ID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: AMOUNT
+                  type: INT
+              - column:
+                  name: MODEL_ID
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: FK_VEHICLE_MODEL
+                    references: MODEL(ID)
+                    deleteCascade: false
+              - column:
+                  name: COLOR_ID
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: FK_VEHICLE_COLOR
+                    references: COLOR(ID)
+                    deleteCascade: false
+              - column:
+                  name: PRICE
+                  type: FLOAT
+              - column:
+                  name: YEAR
+                  type: INT
+      rollback:
+        - dropTable:
+            tableName: VEHICLE
+
+  - changeSet:
+      id: 7.1
+      author: VlaTal
+      changes:
+        - createSequence:
+            sequenceName: EMPLOYEE_SEQ_ID
+      rollback:
+        - dropSequence:
+            sequenceName: EMPLOYEE_SEQ_ID
+  - changeSet:
+      id: 7.2
+      author: VlaTal
+      changes:
+        - createTable:
+            tableName: EMPLOYEE
+            columns:
+              - column:
+                  name: ID
+                  type: bigint
+                  defaultValueSequenceNext: EMPLOYEE_SEQ_ID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: NAME
+                  type: VARCHAR
+              - column:
+                  name: PHONE
+                  type: VARCHAR
+              - column:
+                  name: POSITION
+                  type: VARCHAR
+      rollback:
+        - dropTable:
+            tableName: EMPLOYEE
+
+  - changeSet:
+      id: 8.1
+      author: VlaTal
+      changes:
+        - createSequence:
+            sequenceName: CLIENT_SEQ_ID
+      rollback:
+        - dropSequence:
+            sequenceName: CLIENT_SEQ_ID
+  - changeSet:
+      id: 8.2
+      author: VlaTal
+      changes:
+        - createTable:
+            tableName: CLIENT
+            columns:
+              - column:
+                  name: ID
+                  type: bigint
+                  defaultValueSequenceNext: CLIENT_SEQ_ID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: NAME
+                  type: VARCHAR
+              - column:
+                  name: ADDRESS
+                  type: VARCHAR
+              - column:
+                  name: PHONE
+                  type: VARCHAR
+              - column:
+                  name: PASSPORT
+                  type: VARCHAR
+              - column:
+                  name: DISCOUNT
+                  type: INT
+      rollback:
+        - dropTable:
+            tableName: CLIENT
+
+  - changeSet:
+      id: 9.1
+      author: VlaTal
+      changes:
+        - createSequence:
+            sequenceName: DEAL_SEQ_ID
+      rollback:
+        - dropSequence:
+            sequenceName: DEAL_SEQ_ID
+  - changeSet:
+      id: 9.2
+      author: VlaTal
+      changes:
+        - createTable:
+            tableName: DEAL
+            columns:
+              - column:
+                  name: ID
+                  type: bigint
+                  defaultValueSequenceNext: DEAL_SEQ_ID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: VEHICLE_ID
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: FK_DEAL_VEHICLE
+                    references: VEHICLE(ID)
+                    deleteCascade: false
+              - column:
+                  name: CLIENT_ID
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: FK_DEAL_CLIENT
+                    references: CLIENT(ID)
+                    deleteCascade: false
+              - column:
+                  name: EMPLOYEE_ID
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: FK_DEAL_EMPLOYEE
+                    references: EMPLOYEE(ID)
+                    deleteCascade: false
+              - column:
+                  name: DATE
+                  type: TIMESTAMP
+              - column:
+                  name: TOTAL_PRICE
+                  type: FLOAT
+      rollback:
+        - dropTable:
+            tableName: DEAL
