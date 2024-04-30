@@ -15,6 +15,7 @@ public class ManufacturerConverter implements Converter<ManufacturerDTO, Manufac
 
     @Override
     public Manufacturer fromDTO(ManufacturerDTO DTO) {
+        if (DTO == null) return null;
         return Manufacturer.builder()
                 .id(DTO.getId())
                 .name(DTO.getName())

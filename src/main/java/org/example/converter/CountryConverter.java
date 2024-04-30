@@ -9,6 +9,7 @@ public class CountryConverter implements Converter<CountryDTO, Country> {
 
     @Override
     public Country fromDTO(CountryDTO DTO) {
+        if (DTO == null) return null;
         return Country.builder()
                 .id(DTO.getId())
                 .name(DTO.getName())

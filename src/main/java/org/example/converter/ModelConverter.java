@@ -15,6 +15,7 @@ public class ModelConverter implements Converter<ModelDTO, Model> {
 
     @Override
     public Model fromDTO(ModelDTO DTO) {
+        if (DTO == null) return null;
         return Model.builder()
                 .id(DTO.getId())
                 .name(DTO.getName())

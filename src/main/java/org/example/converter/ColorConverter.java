@@ -9,6 +9,7 @@ public class ColorConverter implements Converter<ColorDTO, Color> {
 
     @Override
     public Color fromDTO(ColorDTO DTO) {
+        if (DTO == null) return null;
         return Color.builder()
                 .id(DTO.getId())
                 .name(DTO.getName())
