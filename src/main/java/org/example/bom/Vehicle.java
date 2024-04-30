@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Objects;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,7 +17,7 @@ public abstract class Vehicle {
 
     private Color color;
 
-    private double price;
+    private float price;
 
     private int year;
 
