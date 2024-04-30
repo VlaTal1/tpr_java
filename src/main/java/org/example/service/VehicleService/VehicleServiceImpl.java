@@ -35,9 +35,9 @@ public class VehicleServiceImpl implements VehicleService {
 
     private final ModelServiceImpl modelService;
 
-    private final ManufacturerServiceImpl manufacturerServiceImpl;
+    private final ManufacturerServiceImpl manufacturerService;
 
-    private final CountryServiceImpl countryServiceImpl;
+    private final CountryServiceImpl countryService;
 
     @Autowired
     public VehicleServiceImpl(Converter<VehicleDTO, Vehicle> vehicleConverter, VehicleRepository vehicleRepository, ColorServiceImpl colorServiceImpl, ModelServiceImpl modelServiceImpl, ManufacturerServiceImpl manufacturerServiceImpl, CountryServiceImpl countryServiceImpl) {
@@ -50,8 +50,8 @@ public class VehicleServiceImpl implements VehicleService {
         this.vehicleRepository = vehicleRepository;
         this.colorService = colorServiceImpl;
         this.modelService = modelServiceImpl;
-        this.manufacturerServiceImpl = manufacturerServiceImpl;
-        this.countryServiceImpl = countryServiceImpl;
+        this.manufacturerService = manufacturerServiceImpl;
+        this.countryService = countryServiceImpl;
     }
 
     @Override
@@ -81,11 +81,11 @@ public class VehicleServiceImpl implements VehicleService {
         if (model == null)
             throw new NotFoundException(STR."Model with id \{vehicle.getModel().getId()} not found");
 
-        Manufacturer manufacturer = manufacturerServiceImpl.findById(vehicle.getModel().getManufacturer().getId());
+        Manufacturer manufacturer = manufacturerService.findById(vehicle.getModel().getManufacturer().getId());
         if (manufacturer == null)
             throw new NotFoundException(STR."Manufacturer with id \{vehicle.getModel().getManufacturer().getId()} not found");
 
-        Country country = countryServiceImpl.findById(vehicle.getModel().getManufacturer().getCountry().getId());
+        Country country = countryService.findById(vehicle.getModel().getManufacturer().getCountry().getId());
         if (country == null)
             throw new NotFoundException(STR."Country with id \{vehicle.getModel().getManufacturer().getCountry().getId()} not found");
     }
