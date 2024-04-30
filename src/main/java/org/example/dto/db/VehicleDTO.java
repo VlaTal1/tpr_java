@@ -23,9 +23,8 @@ public class VehicleDTO {
     @JoinColumn(name = "MODEL_ID", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_VEHICLE_MODEL"))
     private ModelDTO model;
 
-    @ManyToOne
-    @JoinColumn(name = "VEHICLE_TYPE_ID", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_VEHICLE_VEHICLE_TYPE"))
-    private VehicleTypeDTO vehicleType;
+    @Column(name = "TYPE")
+    private String type;
 
     @ManyToOne
     @JoinColumn(name = "COLOR_ID", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_VEHICLE_COLOR"))

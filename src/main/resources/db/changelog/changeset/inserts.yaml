@@ -1,0 +1,66 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-color
+      author: VlaTal
+      changes:
+        - insert:
+            tableName: COLOR
+            columns:
+              - column:
+                  name: NAME
+                  value: Black
+      rollback:
+        - delete:
+            tableName: COUNTRY
+            where: NAME IN ('Black')
+
+  - changeSet:
+      id: insert-country
+      author: VlaTal
+      changes:
+        - insert:
+            tableName: COUNTRY
+            columns:
+              - column:
+                  name: NAME
+                  value: Germany
+      rollback:
+        - delete:
+            tableName: COUNTRY
+            where: NAME IN ('Germany')
+
+  - changeSet:
+      id: insert-manufacturer
+      author: VlaTal
+      changes:
+        - insert:
+            tableName: MANUFACTURER
+            columns:
+              - column:
+                  name: NAME
+                  value: BMW
+              - column:
+                  name: COUNTRY_ID
+                  value: 1
+      rollback:
+        - delete:
+            tableName: COUNTRY
+            where: NAME IN ('BMW')
+
+  - changeSet:
+      id: insert-model
+      author: VlaTal
+      changes:
+        - insert:
+            tableName: MODEL
+            columns:
+              - column:
+                  name: NAME
+                  value: X6
+              - column:
+                  name: MANUFACTURER_ID
+                  value: 1
+      rollback:
+        - delete:
+            tableName: COUNTRY
+            where: NAME IN ('X6')

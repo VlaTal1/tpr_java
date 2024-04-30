@@ -5,7 +5,6 @@ import org.example.bom.*;
 import org.example.dto.db.ColorDTO;
 import org.example.dto.db.ModelDTO;
 import org.example.dto.db.VehicleDTO;
-import org.example.dto.db.VehicleTypeDTO;
 import org.example.factory.MotorcycleFactory;
 import org.example.factory.PassengerCarFactory;
 import org.example.factory.TruckFactory;
@@ -24,13 +23,11 @@ public class VehicleConverter implements Converter<VehicleDTO, Vehicle> {
 
     @Override
     public Vehicle fromDTO(VehicleDTO DTO) {
-        if (DTO.getVehicleType().getName().equals(Type.MOTORCYCLE)) {
+        if (DTO.getType().equals(Type.MOTORCYCLE.toString())) {
             vehicleFactory = new MotorcycleFactory();
-        }
-        else if (DTO.getVehicleType().getName().equals(Type.PASSENGER_CAR)) {
+        } else if (DTO.getType().equals(Type.PASSENGER_CAR.toString())) {
             vehicleFactory = new PassengerCarFactory();
-        }
-        else if (DTO.getVehicleType().getName().equals(Type.TRUCK)) {
+        } else if (DTO.getType().equals(Type.TRUCK.toString())) {
             vehicleFactory = new TruckFactory();
         }
         return vehicleFactory.createVehicle(
@@ -53,17 +50,13 @@ public class VehicleConverter implements Converter<VehicleDTO, Vehicle> {
                 .year(BOM.getYear())
                 .build();
 
-        VehicleTypeDTO vehicleTypeDTO = VehicleTypeDTO.builder().build();
         if (BOM instanceof Motorcycle) {
-            vehicleTypeDTO.setName(Type.MOTORCYCLE.toString());
+            vehicleDTO.setType(Type.MOTORCYCLE.toString());
+        } else if (BOM instanceof PassengerCar) {
+            vehicleDTO.setType(Type.PASSENGER_CAR.toString());
+        } else if (BOM instanceof Truck) {
+            vehicleDTO.setType(Type.TRUCK.toString());
         }
-        else if (BOM instanceof PassengerCar) {
-            vehicleTypeDTO.setName(Type.PASSENGER_CAR.toString());
-        }
-        else if (BOM instanceof Truck) {
-            vehicleTypeDTO.setName(Type.TRUCK.toString());
-        }
-        vehicleDTO.setVehicleType(vehicleTypeDTO);
 
         return vehicleDTO;
     }
