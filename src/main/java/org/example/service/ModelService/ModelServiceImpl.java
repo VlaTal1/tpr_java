@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.bom.Model;
 import org.example.converter.Converter;
 import org.example.dto.db.ModelDTO;
-import org.example.exception.NotFoundException;
 import org.example.repository.ModelRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +23,8 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
-    public Model findById(Long id) throws NotFoundException {
+    public Model findById(Long id) {
         ModelDTO modelDTO = modelRepository.findById(id).orElse(null);
-        if (modelDTO == null) {
-            throw new NotFoundException(STR."Model with id \{id} not found");
-        }
         return modelConverter.fromDTO(modelDTO);
     }
 }

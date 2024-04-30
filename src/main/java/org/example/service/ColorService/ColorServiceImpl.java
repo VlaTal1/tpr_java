@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.bom.Color;
 import org.example.converter.Converter;
 import org.example.dto.db.ColorDTO;
-import org.example.exception.NotFoundException;
 import org.example.repository.ColorRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +23,8 @@ public class ColorServiceImpl implements ColorService {
     }
 
     @Override
-    public Color findById(Long id) throws NotFoundException {
+    public Color findById(Long id) {
         ColorDTO colorDTO = colorRepository.findById(id).orElse(null);
-        if (colorDTO == null) {
-            throw new NotFoundException(STR."Color with id \{id} not found");
-        }
         return colorConverter.fromDTO(colorDTO);
     }
 }
