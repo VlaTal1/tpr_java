@@ -8,7 +8,7 @@ public class PassengerCar extends Vehicle {
 
     private final double annualInterestRate = 0.05; // Річна процентна ставка 5%
 
-    public PassengerCar(Long id, int amount, Model model, Color color, double price, int year) {
+    public PassengerCar(Long id, int amount, Model model, Color color, float price, int year) {
         super(id, amount, model, color, price, year);
     }
 

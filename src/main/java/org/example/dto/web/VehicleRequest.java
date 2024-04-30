@@ -24,7 +24,7 @@ public class VehicleRequest {
 
     private Color color;
 
-    private double price;
+    private float price;
 
     private int year;
 

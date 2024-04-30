@@ -6,5 +6,5 @@ import org.example.bom.Vehicle;
 
 public interface VehicleFactory {
 
-    Vehicle createVehicle(Long id, int amount, Model model, Color color, double price, int year);
+    Vehicle createVehicle(Long id, int amount, Model model, Color color, float price, int year);
 }

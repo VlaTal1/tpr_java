@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class TruckFactory implements VehicleFactory {
 
     @Override
-    public Vehicle createVehicle(Long id, int amount, Model model, Color color, double price, int year) {
+    public Vehicle createVehicle(Long id, int amount, Model model, Color color, float price, int year) {
         return new Truck(id, amount, model, color, price, year);
     }
 }
