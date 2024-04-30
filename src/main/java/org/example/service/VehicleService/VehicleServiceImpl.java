@@ -73,6 +73,11 @@ public class VehicleServiceImpl implements VehicleService {
         return vehicleConverter.fromDTO(saved);
     }
 
+    @Override
+    public void checkById(Long id) throws NotFoundException {
+        vehicleRepository.findById(id).orElseThrow(() -> new NotFoundException(STR."Vehicle with id \{id} not found"));
+    }
+
     private void checkCanSave(Vehicle vehicle) throws NotFoundException {
         Color color = colorService.findById(vehicle.getColor().getId());
         if (color == null)

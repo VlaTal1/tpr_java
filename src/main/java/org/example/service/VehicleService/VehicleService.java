@@ -8,4 +8,6 @@ public interface VehicleService {
     String printVehicle(Vehicle vehicle);
 
     Vehicle save(Vehicle vehicle) throws NotFoundException;
+
+    void checkById(Long id) throws NotFoundException;
 }
