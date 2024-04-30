@@ -1,7 +1,8 @@
-package org.example.dto;
+package org.example.dto.db;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.bom.Type;
 
 @Getter
 @Setter
@@ -17,5 +18,5 @@ public class VehicleTypeDTO {
     private Long id;
 
     @Column(name = "NAME")
-    private String name;
+    private Type name;
 }

@@ -1,4 +1,4 @@
-package org.example.dto;
+package org.example.dto.db;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,5 +21,5 @@ public class ModelDTO {
 
     @ManyToOne
     @JoinColumn(name = "MANUFACTURER_ID", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "FK_MODEL_MANUFACTURER"))
-    private ManufacturerDTO prompt;
+    private ManufacturerDTO manufacturer;
 }
