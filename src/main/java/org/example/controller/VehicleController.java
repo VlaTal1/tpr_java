@@ -5,7 +5,7 @@ import org.example.bom.Vehicle;
 import org.example.converter.Converter;
 import org.example.dto.web.VehicleRequest;
 import org.example.exception.NotFoundException;
-import org.example.service.VehicleService.VehicleServiceImpl;
+import org.example.service.VehicleService.VehicleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/vehicle")
 public class VehicleController {
 
-    private final VehicleServiceImpl vehicleService;
+    private final VehicleService vehicleService;
 
     private final Converter<VehicleRequest, Vehicle> vehicleRequestConverter;
 
