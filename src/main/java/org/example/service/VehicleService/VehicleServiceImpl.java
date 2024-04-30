@@ -68,6 +68,7 @@ public class VehicleServiceImpl implements VehicleService {
     public Vehicle save(Vehicle vehicle) throws NotFoundException {
         checkCanSave(vehicle);
         VehicleDTO vehicleDTO = vehicleConverter.toDTO(vehicle);
+        vehicleDTO.setId(null);
         VehicleDTO saved = vehicleRepository.save(vehicleDTO);
         return vehicleConverter.fromDTO(saved);
     }
