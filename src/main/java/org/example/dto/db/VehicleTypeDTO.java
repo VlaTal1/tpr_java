@@ -18,5 +18,5 @@ public class VehicleTypeDTO {
     private Long id;
 
     @Column(name = "NAME")
-    private Type name;
+    private String name;
 }

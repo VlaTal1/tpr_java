@@ -55,13 +55,13 @@ public class VehicleConverter implements Converter<VehicleDTO, Vehicle> {
 
         VehicleTypeDTO vehicleTypeDTO = VehicleTypeDTO.builder().build();
         if (BOM instanceof Motorcycle) {
-            vehicleTypeDTO.setName(Type.MOTORCYCLE);
+            vehicleTypeDTO.setName(Type.MOTORCYCLE.toString());
         }
         else if (BOM instanceof PassengerCar) {
-            vehicleTypeDTO.setName(Type.PASSENGER_CAR);
+            vehicleTypeDTO.setName(Type.PASSENGER_CAR.toString());
         }
         else if (BOM instanceof Truck) {
-            vehicleTypeDTO.setName(Type.TRUCK);
+            vehicleTypeDTO.setName(Type.TRUCK.toString());
         }
         vehicleDTO.setVehicleType(vehicleTypeDTO);
 
