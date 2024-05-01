@@ -1,10 +1,7 @@
 package org.example.converter;
 
 import lombok.RequiredArgsConstructor;
-import org.example.bom.Client;
-import org.example.bom.Deal;
-import org.example.bom.Employee;
-import org.example.bom.Vehicle;
+import org.example.bom.*;
 import org.example.dto.db.ClientDTO;
 import org.example.dto.db.DealDTO;
 import org.example.dto.db.EmployeeDTO;
@@ -30,6 +27,9 @@ public class DealConverter implements Converter<DealDTO, Deal> {
                 .employee(employeeConverter.fromDTO(DTO.getEmployee()))
                 .date(DTO.getDate())
                 .totalPrice(DTO.getTotalPrice())
+                .paymentType(PaymentType.valueOf(DTO.getPaymentType()))
+                .monthlyPayment(DTO.getMonthlyPayment())
+                .paid(DTO.getPaid())
                 .build();
     }
 
@@ -42,6 +42,9 @@ public class DealConverter implements Converter<DealDTO, Deal> {
                 .employee(employeeConverter.toDTO(BOM.getEmployee()))
                 .date(BOM.getDate())
                 .totalPrice(BOM.getTotalPrice())
+                .paymentType(BOM.getPaymentType().toString())
+                .monthlyPayment(BOM.getMonthlyPayment())
+                .paid(BOM.getPaid())
                 .build();
     }
 }

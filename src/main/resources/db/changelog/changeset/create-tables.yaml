@@ -306,6 +306,15 @@ databaseChangeLog:
               - column:
                   name: TOTAL_PRICE
                   type: FLOAT
+              - column:
+                  name: PAYMENT_TYPE
+                  type: VARCHAR
+              - column:
+                  name: MONTHLY_PAYMENT
+                  type: FLOAT
+              - column:
+                  name: PAID
+                  type: FLOAT
       rollback:
         - dropTable:
             tableName: DEAL

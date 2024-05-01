@@ -22,4 +22,10 @@ public class Deal {
     private Timestamp date;
 
     private Float totalPrice;
+
+    private PaymentType paymentType;
+
+    private Float monthlyPayment;
+
+    private Float paid;
 }

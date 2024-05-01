@@ -35,4 +35,13 @@ public class DealDTO {
 
     @Column(name = "TOTAL_PRICE")
     private Float totalPrice;
+
+    @Column(name = "PAYMENT_TYPE")
+    private String paymentType;
+
+    @Column(name = "MONTHLY_PAYMENT")
+    private Float monthlyPayment;
+
+    @Column(name = "PAID")
+    private Float paid;
 }
