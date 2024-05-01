@@ -2,12 +2,12 @@ package org.example.converter;
 
 import org.example.bom.Employee;
 import org.example.dto.db.EmployeeDTO;
-import org.example.service.DealService.DealServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class EmployeeConverterTest {
 
