@@ -12,6 +12,10 @@ public class PassengerCar extends Vehicle {
         super(id, amount, model, color, price, year);
     }
 
+    public PassengerCar() {
+        super();
+    }
+
     @Override
     public int calculateCredit() {
         double downPayment = getPrice() * downPaymentPercentage;
