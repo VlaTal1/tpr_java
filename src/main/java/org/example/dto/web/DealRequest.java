@@ -1,7 +1,7 @@
 package org.example.dto.web;
 
-
 import lombok.*;
+import org.example.bom.PaymentType;
 
 @Getter
 @Setter
@@ -15,4 +15,6 @@ public class DealRequest {
     private Long clientId;
 
     private Long employeeId;
+
+    private PaymentType paymentType;
 }

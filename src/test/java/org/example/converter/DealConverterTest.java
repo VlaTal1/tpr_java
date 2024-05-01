@@ -40,7 +40,7 @@ class DealConverterTest {
         VehicleDTO vehicleDTO = new VehicleDTO();
         ClientDTO clientDTO = new ClientDTO();
         EmployeeDTO employeeDTO = new EmployeeDTO();
-        DealDTO dealDTO = new DealDTO(1L, vehicleDTO, clientDTO, employeeDTO, timestamp, 10000F);
+        DealDTO dealDTO = new DealDTO(1L, vehicleDTO, clientDTO, employeeDTO, timestamp, 10000F, PaymentType.CASH.toString(), 100F, 0F);
 
         Vehicle vehicle = new PassengerCar();
         Client client = new Client();
@@ -56,6 +56,9 @@ class DealConverterTest {
         assertEquals(1L, actualDeal.getId());
         assertEquals(timestamp, actualDeal.getDate());
         assertEquals(10000F, actualDeal.getTotalPrice());
+        assertEquals(PaymentType.CASH, actualDeal.getPaymentType());
+        assertEquals(100F, actualDeal.getMonthlyPayment());
+        assertEquals(0F, actualDeal.getPaid());
         assertEquals(vehicle, actualDeal.getVehicle());
         assertEquals(client, actualDeal.getClient());
         assertEquals(employee, actualDeal.getEmployee());
@@ -68,7 +71,7 @@ class DealConverterTest {
         Vehicle vehicle = new PassengerCar();
         Client client = new Client();
         Employee employee = new Employee();
-        Deal deal = new Deal(1L, vehicle, client, employee, timestamp, 10000F);
+        Deal deal = new Deal(1L, vehicle, client, employee, timestamp, 10000F, PaymentType.CASH, 100F, 0F);
 
         VehicleDTO vehicleDTO = new VehicleDTO();
         ClientDTO clientDTO = new ClientDTO();
@@ -84,6 +87,9 @@ class DealConverterTest {
         assertEquals(1L, actualDeal.getId());
         assertEquals(timestamp, actualDeal.getDate());
         assertEquals(10000F, actualDeal.getTotalPrice());
+        assertEquals(PaymentType.CASH.toString(), actualDeal.getPaymentType());
+        assertEquals(100F, actualDeal.getMonthlyPayment());
+        assertEquals(0F, actualDeal.getPaid());
         assertEquals(vehicleDTO, actualDeal.getVehicle());
         assertEquals(clientDTO, actualDeal.getClient());
         assertEquals(employeeDTO, actualDeal.getEmployee());
