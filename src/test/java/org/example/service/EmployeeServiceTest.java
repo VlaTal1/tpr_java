@@ -5,7 +5,6 @@ import org.example.converter.Converter;
 import org.example.dto.db.EmployeeDTO;
 import org.example.exception.NotFoundException;
 import org.example.repository.EmployeeRepository;
-import org.example.service.DealService.DealServiceImpl;
 import org.example.service.EmployeeService.EmployeeService;
 import org.example.service.EmployeeService.EmployeeServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +14,8 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -52,7 +52,7 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void findById_NotFound() throws NotFoundException {
+    void findById_NotFound() {
         Employee employee = new Employee(1L, "Alex", "+38097847567", "Sales manages");
 
         when(employeeRepository.findById(employee.getId())).thenReturn(Optional.empty());
