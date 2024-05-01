@@ -1,18 +1,16 @@
 package org.example.bom;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Deal {
 
-    @JsonProperty
     private Long id;
 
     private Vehicle vehicle;
@@ -21,9 +19,7 @@ public class Deal {
 
     private Employee employee;
 
-    @JsonProperty
     private Timestamp date;
 
-    @JsonProperty
-    private double totalPrice;
+    private Float totalPrice;
 }
