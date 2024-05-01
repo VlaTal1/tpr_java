@@ -12,8 +12,11 @@ import org.example.printer.VehiclePrinter;
 import org.example.repository.VehicleRepository;
 import org.example.service.ColorService.ColorService;
 import org.example.service.ColorService.ColorServiceImpl;
+import org.example.service.CountryService.CountryService;
 import org.example.service.CountryService.CountryServiceImpl;
+import org.example.service.ManufacturerService.ManufacturerService;
 import org.example.service.ManufacturerService.ManufacturerServiceImpl;
+import org.example.service.ModelService.ModelService;
 import org.example.service.ModelService.ModelServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,14 +36,14 @@ public class VehicleServiceImpl implements VehicleService {
 
     private final ColorService colorService;
 
-    private final ModelServiceImpl modelService;
+    private final ModelService modelService;
 
-    private final ManufacturerServiceImpl manufacturerService;
+    private final ManufacturerService manufacturerService;
 
-    private final CountryServiceImpl countryService;
+    private final CountryService countryService;
 
     @Autowired
-    public VehicleServiceImpl(Converter<VehicleDTO, Vehicle> vehicleConverter, VehicleRepository vehicleRepository, ColorServiceImpl colorServiceImpl, ModelServiceImpl modelServiceImpl, ManufacturerServiceImpl manufacturerServiceImpl, CountryServiceImpl countryServiceImpl) {
+    public VehicleServiceImpl(Converter<VehicleDTO, Vehicle> vehicleConverter, VehicleRepository vehicleRepository, ColorService colorServiceImpl, ModelService modelServiceImpl, ManufacturerService manufacturerServiceImpl, CountryService countryServiceImpl) {
         this.printers = new HashMap<>();
         printers.put(PassengerCar.class, new PassengerCarPrinter());
         printers.put(Truck.class, new TruckPrinter());
