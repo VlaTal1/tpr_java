@@ -9,6 +9,8 @@ public interface VehicleService {
 
     Vehicle save(Vehicle vehicle) throws NotFoundException;
 
+    Vehicle update(Vehicle vehicle);
+
     Vehicle findById(Long id) throws NotFoundException;
 
     boolean isAvailable(Long id) throws NotFoundException;
