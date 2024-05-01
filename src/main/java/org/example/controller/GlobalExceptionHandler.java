@@ -1,7 +1,10 @@
 package org.example.controller;
 
 import org.example.dto.web.ErrorResponse;
+import org.example.exception.ClientAlreadyExistsException;
 import org.example.exception.NotFoundException;
+import org.example.exception.PhoneAlreadyUsedException;
+import org.example.exception.VehicleOutOfStockException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +28,27 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException ex) {
         ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatusCode.valueOf(errorResponse.status()));
+    }
+
+    @ExceptionHandler(VehicleOutOfStockException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleVehicleOutOfStockException(VehicleOutOfStockException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatusCode.valueOf(errorResponse.status()));
+    }
+
+    @ExceptionHandler(PhoneAlreadyUsedException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ErrorResponse> handlePhoneAlreadyUsedException(PhoneAlreadyUsedException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.CONFLICT.value(), ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatusCode.valueOf(errorResponse.status()));
+    }
+
+    @ExceptionHandler(ClientAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ErrorResponse> handleClientAlreadyExistsException(ClientAlreadyExistsException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.CONFLICT.value(), ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatusCode.valueOf(errorResponse.status()));
     }
 }

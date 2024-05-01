@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ClientRepository extends JpaRepository<ClientDTO, Long> {
 
+    ClientDTO findByPhone(String phone);
+
+    ClientDTO findByNameAndAddressAndPhoneAndPassport(String name, String address, String phone, String passport);
 }

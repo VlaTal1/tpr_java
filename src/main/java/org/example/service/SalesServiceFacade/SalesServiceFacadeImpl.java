@@ -6,7 +6,9 @@ import org.example.bom.Deal;
 import org.example.bom.Employee;
 import org.example.bom.Vehicle;
 import org.example.dto.web.DealRequest;
+import org.example.exception.ClientAlreadyExistsException;
 import org.example.exception.NotFoundException;
+import org.example.exception.PhoneAlreadyUsedException;
 import org.example.exception.VehicleOutOfStockException;
 import org.example.service.ClientService.ClientService;
 import org.example.service.DealService.DealService;
@@ -50,7 +52,14 @@ public class SalesServiceFacadeImpl implements SalesServiceFacade {
     }
 
     @Override
-    public Client addClient(Client client) {
-        return null;
+    public Client addClient(Client client) throws ClientAlreadyExistsException, PhoneAlreadyUsedException {
+        if (clientService.isClientExists(client)) {
+            throw new ClientAlreadyExistsException(STR."This client already exists");
+        }
+        if (clientService.isPhoneUsed(client.getPhone())) {
+            throw new PhoneAlreadyUsedException(STR."Phone \{client.getPhone()} already used");
+        }
+        client.setDiscount(0);
+        return clientService.save(client);
     }
 }
