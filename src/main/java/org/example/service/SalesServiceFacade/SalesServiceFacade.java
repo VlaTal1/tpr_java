@@ -14,6 +14,3 @@ public interface SalesServiceFacade {
 
     Client addClient(Client client) throws ClientAlreadyExistsException, PhoneAlreadyUsedException;
 }
-
-
-
