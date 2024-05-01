@@ -1,8 +1,9 @@
 package org.example.service.ClientService;
 
+import org.example.bom.Client;
 import org.example.exception.NotFoundException;
 
 public interface ClientService {
 
-    void checkById(Long id) throws NotFoundException;
+    Client findById(Long id) throws NotFoundException;
 }
