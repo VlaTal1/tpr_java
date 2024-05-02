@@ -2,6 +2,7 @@ package org.example.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.bom.Deal;
+import org.example.bom.PaymentType;
 import org.example.dto.web.DealRequest;
 import org.example.exception.VehicleOutOfStockException;
 import org.example.service.SalesServiceFacade.SalesServiceFacade;
@@ -32,7 +33,7 @@ class DealControllerTest {
 
     @Test
     void add() throws Exception {
-        DealRequest dealRequest = new DealRequest(1L, 1L, 1L);
+        DealRequest dealRequest = new DealRequest(1L, 1L, 1L, PaymentType.CASH);
         Deal deal = new Deal();
 
         when(salesServiceFacade.createDeal(any(DealRequest.class))).thenReturn(deal);
@@ -49,7 +50,7 @@ class DealControllerTest {
 
     @Test
     void add_VehicleOutOfStockException() throws Exception {
-        DealRequest dealRequest = new DealRequest(1L, 1L, 1L);
+        DealRequest dealRequest = new DealRequest(1L, 1L, 1L, PaymentType.CASH);
 
         when(salesServiceFacade.createDeal(any(DealRequest.class)))
                 .thenThrow(new VehicleOutOfStockException("Vehicle is out of stock"));

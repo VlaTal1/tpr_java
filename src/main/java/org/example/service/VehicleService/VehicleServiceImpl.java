@@ -89,6 +89,7 @@ public class VehicleServiceImpl implements VehicleService {
         return vehicleConverter.fromDTO(vehicleDTO);
     }
 
+    // TODO test for throw
     @Override
     public boolean isAvailable(Long id) throws NotFoundException {
         VehicleDTO vehicleDTO = vehicleRepository.findById(id).orElse(null);
@@ -99,18 +100,22 @@ public class VehicleServiceImpl implements VehicleService {
     private void checkCanSave(Vehicle vehicle) throws NotFoundException {
         Color color = colorService.findById(vehicle.getColor().getId());
         if (color == null)
+            // TODO test for throw
             throw new NotFoundException(STR."Color with id \{vehicle.getColor().getId()} not found");
 
         Model model = modelService.findById(vehicle.getModel().getId());
         if (model == null)
+            // TODO test for throw
             throw new NotFoundException(STR."Model with id \{vehicle.getModel().getId()} not found");
 
         Manufacturer manufacturer = manufacturerService.findById(vehicle.getModel().getManufacturer().getId());
         if (manufacturer == null)
+            // TODO test for throw
             throw new NotFoundException(STR."Manufacturer with id \{vehicle.getModel().getManufacturer().getId()} not found");
 
         Country country = countryService.findById(vehicle.getModel().getManufacturer().getCountry().getId());
         if (country == null)
+            // TODO test for throw
             throw new NotFoundException(STR."Country with id \{vehicle.getModel().getManufacturer().getCountry().getId()} not found");
     }
 }

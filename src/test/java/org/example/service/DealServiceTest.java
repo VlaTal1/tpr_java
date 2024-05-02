@@ -36,6 +36,8 @@ class DealServiceTest {
 
     @Test
     void save() {
+        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+
         Country country = new Country(1L, "country");
         Manufacturer manufacturer = new Manufacturer(1L, "manufacturer", country);
         Model model = new Model(1L, "ModelA", manufacturer);
@@ -43,7 +45,7 @@ class DealServiceTest {
         Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022);
         Client client = new Client(1L, "John", "Address", "+380984785740", "UA023948274", 3);
         Employee employee = new Employee(1L, "Alex", "+38097847567", "Sales manages");
-        Deal deal = new Deal(1L, vehicle, client, employee, Timestamp.valueOf(LocalDateTime.now()), 10000F);
+        Deal deal = new Deal(1L, vehicle, client, employee, timestamp, 10000F, PaymentType.CASH, 100F, 0F);
 
         CountryDTO countryDTO = new CountryDTO(1L, "country");
         ManufacturerDTO manufacturerDTO = new ManufacturerDTO(1L, "manufacturer", countryDTO);
@@ -52,7 +54,7 @@ class DealServiceTest {
         VehicleDTO vehicleDTO = new VehicleDTO(1L, 5000, modelDTO, Type.PASSENGER_CAR.toString(), colorDTO, 6000F, 2022);
         ClientDTO clientDTO = new ClientDTO(1L, "John", "Address", "+380984785740", "UA023948274", 3);
         EmployeeDTO employeeDTO = new EmployeeDTO(1L, "Alex", "+38097847567", "Sales manages");
-        DealDTO dealDTO = new DealDTO(1L, vehicleDTO, clientDTO, employeeDTO, Timestamp.valueOf(LocalDateTime.now()), 10000F);
+        DealDTO dealDTO = new DealDTO(1L, vehicleDTO, clientDTO, employeeDTO, timestamp, 10000F, PaymentType.CASH.toString(), 100F, 0F);
 
         when(dealConverter.toDTO(deal)).thenReturn(dealDTO);
         when(dealRepository.save(dealDTO)).thenReturn(dealDTO);

@@ -48,8 +48,8 @@ class SalesServiceFacadeTest {
     }
 
     @Test
-    void createDeal() throws NotFoundException, VehicleOutOfStockException {
-        DealRequest dealRequest = new DealRequest(1L, 1L, 1L);
+    void createDeal_Cash() throws NotFoundException, VehicleOutOfStockException {
+        DealRequest dealRequest = new DealRequest(1L, 1L, 1L, PaymentType.CASH);
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         Model model = new Model();
@@ -57,7 +57,7 @@ class SalesServiceFacadeTest {
         Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 30000, 2022);
         Client client = new Client(1L, "John", "Address", "+380984785740", "UA023948274", 3);
         Employee employee = new Employee(1L, "Alex", "+38097847567", "Sales manager");
-        Deal deal = new Deal(1L, vehicle, client, employee, timestamp, 29100F);
+        Deal deal = new Deal(1L, vehicle, client, employee, timestamp, 29100F, PaymentType.CASH, 0F, 100F);
 
         when(vehicleService.findById(vehicle.getId())).thenReturn(vehicle);
         when(vehicleService.isAvailable(vehicle.getId())).thenReturn(true);
@@ -71,6 +71,48 @@ class SalesServiceFacadeTest {
         assertEquals(1L, actualDeal.getId());
         assertEquals(4999, vehicle.getAmount());
         assertEquals(29100, actualDeal.getTotalPrice());
+        assertEquals(PaymentType.CASH, actualDeal.getPaymentType());
+        assertEquals(0F, actualDeal.getMonthlyPayment());
+        assertEquals(100F, actualDeal.getPaid());
+        assertEquals(timestamp, actualDeal.getDate());
+        assertEquals(vehicle, actualDeal.getVehicle());
+        assertEquals(client, actualDeal.getClient());
+        assertEquals(employee, actualDeal.getEmployee());
+        verify(vehicleService).findById(anyLong());
+        verify(vehicleService).isAvailable(anyLong());
+        verify(clientService).findById(anyLong());
+        verify(employeeService).findById(anyLong());
+        verify(vehicleService).update(vehicle);
+        verify(dealService).save(any(Deal.class));
+    }
+
+    @Test
+    void createDeal_Credit() throws NotFoundException, VehicleOutOfStockException {
+        DealRequest dealRequest = new DealRequest(1L, 1L, 1L, PaymentType.CREDIT);
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Model model = new Model();
+        Color color = new Color();
+        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 30000, 2022);
+        Client client = new Client(1L, "John", "Address", "+380984785740", "UA023948274", 3);
+        Employee employee = new Employee(1L, "Alex", "+38097847567", "Sales manager");
+        Deal deal = new Deal(1L, vehicle, client, employee, timestamp, 30000F, PaymentType.CREDIT, 100F, 0F);
+
+        when(vehicleService.findById(vehicle.getId())).thenReturn(vehicle);
+        when(vehicleService.isAvailable(vehicle.getId())).thenReturn(true);
+        when(clientService.findById(client.getId())).thenReturn(client);
+        when(employeeService.findById(employee.getId())).thenReturn(employee);
+        when(vehicleService.update(vehicle)).thenReturn(vehicle);
+        when(dealService.save(any(Deal.class))).thenReturn(deal);
+
+        Deal actualDeal = salesServiceFacade.createDeal(dealRequest);
+
+        assertEquals(1L, actualDeal.getId());
+        assertEquals(4999, vehicle.getAmount());
+        assertEquals(30000, actualDeal.getTotalPrice());
+        assertEquals(PaymentType.CREDIT, actualDeal.getPaymentType());
+        assertEquals(100F, actualDeal.getMonthlyPayment());
+        assertEquals(0F, actualDeal.getPaid());
         assertEquals(timestamp, actualDeal.getDate());
         assertEquals(vehicle, actualDeal.getVehicle());
         assertEquals(client, actualDeal.getClient());
