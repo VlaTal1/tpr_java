@@ -2,13 +2,13 @@ package org.example.bom;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Objects;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public abstract class Vehicle {
 
     private Long id;
@@ -19,7 +19,7 @@ public abstract class Vehicle {
 
     private Color color;
 
-    private double price;
+    private float price;
 
     private int year;
 

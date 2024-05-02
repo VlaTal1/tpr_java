@@ -1,0 +1,114 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-color
+      author: VlaTal
+      changes:
+        - insert:
+            tableName: COLOR
+            columns:
+              - column:
+                  name: NAME
+                  value: Black
+      rollback:
+        - delete:
+            tableName: COUNTRY
+            where: NAME IN ('Black')
+
+  - changeSet:
+      id: insert-country
+      author: VlaTal
+      changes:
+        - insert:
+            tableName: COUNTRY
+            columns:
+              - column:
+                  name: NAME
+                  value: Germany
+      rollback:
+        - delete:
+            tableName: COUNTRY
+            where: NAME IN ('Germany')
+
+  - changeSet:
+      id: insert-manufacturer
+      author: VlaTal
+      changes:
+        - insert:
+            tableName: MANUFACTURER
+            columns:
+              - column:
+                  name: NAME
+                  value: BMW
+              - column:
+                  name: COUNTRY_ID
+                  value: 1
+      rollback:
+        - delete:
+            tableName: COUNTRY
+            where: NAME IN ('BMW')
+
+  - changeSet:
+      id: insert-model
+      author: VlaTal
+      changes:
+        - insert:
+            tableName: MODEL
+            columns:
+              - column:
+                  name: NAME
+                  value: X6
+              - column:
+                  name: MANUFACTURER_ID
+                  value: 1
+      rollback:
+        - delete:
+            tableName: COUNTRY
+            where: NAME IN ('X6')
+
+  - changeSet:
+      id: insert-client
+      author: VlaTal
+      changes:
+        - insert:
+            tableName: CLIENT
+            columns:
+              - column:
+                  name: NAME
+                  value: "Gerald the Witcher"
+              - column:
+                  name: ADDRESS
+                  value: "Rivia St. 1336"
+              - column:
+                  name: PHONE
+                  value: "+380668475674"
+              - column:
+                  name: PASSPORT
+                  value: "PL23409857234"
+              - column:
+                  name: DISCOUNT
+                  value: 3
+      rollback:
+        - delete:
+            tableName: CLIENT
+            where: NAME IN ('Gerald the Witcher')
+
+  - changeSet:
+      id: insert-employee
+      author: VlaTal
+      changes:
+        - insert:
+            tableName: EMPLOYEE
+            columns:
+              - column:
+                  name: NAME
+                  value: "Julian Alfred Pankratz"
+              - column:
+                  name: PHONE
+                  value: "+380668475555"
+              - column:
+                  name: POSITION
+                  value: "Sales manager"
+      rollback:
+        - delete:
+            tableName: EMPLOYEE
+            where: NAME IN ('Julian Alfred Pankratz')

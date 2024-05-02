@@ -1,14 +1,14 @@
 package org.example.bom;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Deal {
 
     private Long id;
@@ -21,5 +21,11 @@ public class Deal {
 
     private Timestamp date;
 
-    private double totalPrice;
+    private Float totalPrice;
+
+    private PaymentType paymentType;
+
+    private Float monthlyPayment;
+
+    private Float paid;
 }

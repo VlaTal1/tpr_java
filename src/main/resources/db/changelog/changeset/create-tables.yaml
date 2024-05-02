@@ -134,41 +134,12 @@ databaseChangeLog:
       author: VlaTal
       changes:
         - createSequence:
-            sequenceName: VEHICLE_TYPE_SEQ_ID
+            sequenceName: VEHICLE_SEQ_ID
       rollback:
         - dropSequence:
-            sequenceName: VEHICLE_TYPE_SEQ_ID
+            sequenceName: VEHICLE_SEQ_ID
   - changeSet:
       id: 5.2
-      author: VlaTal
-      changes:
-        - createTable:
-            tableName: VEHICLE_TYPE
-            columns:
-              - column:
-                  name: ID
-                  type: bigint
-                  defaultValueSequenceNext: VEHICLE_TYPE_SEQ_ID
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: NAME
-                  type: VARCHAR
-      rollback:
-        - dropTable:
-            tableName: VEHICLE_TYPE
-
-  - changeSet:
-      id: 6.1
-      author: VlaTal
-      changes:
-        - createSequence:
-            sequenceName: VEHICLE_SEQ_ID
-      rollback:
-        - dropSequence:
-            sequenceName: VEHICLE_SEQ_ID
-  - changeSet:
-      id: 6.2
       author: VlaTal
       changes:
         - createTable:
@@ -191,12 +162,8 @@ databaseChangeLog:
                     references: MODEL(ID)
                     deleteCascade: false
               - column:
-                  name: VEHICLE_TYPE_ID
-                  type: BIGINT
-                  constraints:
-                    foreignKeyName: FK_VEHICLE_VEHICLE_TYPE
-                    references: VEHICLE_TYPE(ID)
-                    deleteCascade: false
+                  name: TYPE
+                  type: VARCHAR
               - column:
                   name: COLOR_ID
                   type: BIGINT
@@ -215,7 +182,7 @@ databaseChangeLog:
             tableName: VEHICLE
 
   - changeSet:
-      id: 7.1
+      id: 6.1
       author: VlaTal
       changes:
         - createSequence:
@@ -224,7 +191,7 @@ databaseChangeLog:
         - dropSequence:
             sequenceName: EMPLOYEE_SEQ_ID
   - changeSet:
-      id: 7.2
+      id: 6.2
       author: VlaTal
       changes:
         - createTable:
@@ -250,7 +217,7 @@ databaseChangeLog:
             tableName: EMPLOYEE
 
   - changeSet:
-      id: 8.1
+      id: 7.1
       author: VlaTal
       changes:
         - createSequence:
@@ -259,7 +226,7 @@ databaseChangeLog:
         - dropSequence:
             sequenceName: CLIENT_SEQ_ID
   - changeSet:
-      id: 8.2
+      id: 7.2
       author: VlaTal
       changes:
         - createTable:
@@ -291,7 +258,7 @@ databaseChangeLog:
             tableName: CLIENT
 
   - changeSet:
-      id: 9.1
+      id: 8.1
       author: VlaTal
       changes:
         - createSequence:
@@ -300,7 +267,7 @@ databaseChangeLog:
         - dropSequence:
             sequenceName: DEAL_SEQ_ID
   - changeSet:
-      id: 9.2
+      id: 8.2
       author: VlaTal
       changes:
         - createTable:
@@ -338,6 +305,15 @@ databaseChangeLog:
                   type: TIMESTAMP
               - column:
                   name: TOTAL_PRICE
+                  type: FLOAT
+              - column:
+                  name: PAYMENT_TYPE
+                  type: VARCHAR
+              - column:
+                  name: MONTHLY_PAYMENT
+                  type: FLOAT
+              - column:
+                  name: PAID
                   type: FLOAT
       rollback:
         - dropTable:
