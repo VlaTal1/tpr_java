@@ -18,6 +18,7 @@
     <modules>
         <module>tpr-dealership</module>
         <module>tpr-auction</module>
+        <module>tpr-domain</module>
     </modules>
 
     <properties>

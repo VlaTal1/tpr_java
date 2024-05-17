@@ -5,7 +5,6 @@ import org.example.dto.web.VehicleRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
-import org.springframework.dao.UncategorizedDataAccessException;
 
 import static org.junit.jupiter.api.Assertions.*;
 

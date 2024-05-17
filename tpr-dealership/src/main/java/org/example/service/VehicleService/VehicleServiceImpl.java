@@ -11,13 +11,9 @@ import org.example.printer.TruckPrinter;
 import org.example.printer.VehiclePrinter;
 import org.example.repository.VehicleRepository;
 import org.example.service.ColorService.ColorService;
-import org.example.service.ColorService.ColorServiceImpl;
 import org.example.service.CountryService.CountryService;
-import org.example.service.CountryService.CountryServiceImpl;
 import org.example.service.ManufacturerService.ManufacturerService;
-import org.example.service.ManufacturerService.ManufacturerServiceImpl;
 import org.example.service.ModelService.ModelService;
-import org.example.service.ModelService.ModelServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

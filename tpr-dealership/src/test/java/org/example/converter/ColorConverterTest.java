@@ -2,7 +2,6 @@ package org.example.converter;
 
 import org.example.bom.Color;
 import org.example.dto.db.ColorDTO;
-import org.example.service.DealService.DealServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
