@@ -1,0 +1,161 @@
+databaseChangeLog:
+  - changeSet:
+      id: auction-create-client-sequence
+      author: VlaTal
+      changes:
+        - createSequence:
+            sequenceName: CLIENT_SEQ_ID
+      rollback:
+        - dropSequence:
+            sequenceName: CLIENT_SEQ_ID
+  - changeSet:
+      id: auction-create-client-table
+      author: VlaTal
+      changes:
+        - createTable:
+            tableName: CLIENT
+            columns:
+              - column:
+                  name: ID
+                  type: BIGINT
+                  defaultValueSequenceNext: CLIENT_SEQ_ID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: NAME
+                  type: VARCHAR
+              - column:
+                  name: ADDRESS
+                  type: VARCHAR
+              - column:
+                  name: PHONE
+                  type: VARCHAR
+              - column:
+                  name: PASSPORT
+                  type: VARCHAR
+      rollback:
+        - dropTable:
+            tableName: CLIENT
+
+  - changeSet:
+      id: auction-create-bid-sequence
+      author: VlaTal
+      changes:
+        - createSequence:
+            sequenceName: BID_SEQ_ID
+      rollback:
+        - dropSequence:
+            sequenceName: BID_SEQ_ID
+  - changeSet:
+      id: auction-create-bid-table
+      author: VlaTal
+      changes:
+        - createTable:
+            tableName: BID
+            columns:
+              - column:
+                  name: ID
+                  type: BIGINT
+                  defaultValueSequenceNext: BID_SEQ_ID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: CLIENT_ID
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: FK_BID_CLIENT
+                    references: CLIENT(ID)
+                    deleteCascade: false
+              - column:
+                  name: AMOUNT
+                  type: FLOAT
+      rollback:
+        - dropTable:
+            tableName: BID
+
+  - changeSet:
+      id: auction-create-auction-sequence
+      author: VlaTal
+      changes:
+        - createSequence:
+            sequenceName: AUCTION_SEQ_ID
+      rollback:
+        - dropSequence:
+            sequenceName: AUCTION_SEQ_ID
+  - changeSet:
+      id: auction-create-auction-table
+      author: VlaTal
+      changes:
+        - createTable:
+            tableName: AUCTION
+            columns:
+              - column:
+                  name: ID
+                  type: BIGINT
+                  defaultValueSequenceNext: AUCTION_SEQ_ID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: VEHICLE_ID
+                  type: BIGINT
+              - column:
+                  name: START_TIME
+                  type: TIMESTAMP
+              - column:
+                  name: BID_TIMEOUT_SEC
+                  type: INTEGER
+              - column:
+                  name: START_PRICE
+                  type: FLOAT
+              - column:
+                  name: MIN_BID
+                  type: FLOAT
+              - column:
+                  name: AUCTION_STATUS
+                  type: VARCHAR
+      rollback:
+        - dropTable:
+            tableName: AUCTION
+
+  - changeSet:
+      id: auction-create-bid-history-sequence
+      author: VlaTal
+      changes:
+        - createSequence:
+            sequenceName: BID_HISTORY_SEQ_ID
+      rollback:
+        - dropSequence:
+            sequenceName: BID_HISTORY_SEQ_ID
+  - changeSet:
+      id: auction-create-bid-history-table
+      author: VlaTal
+      changes:
+        - createTable:
+            tableName: BID_HISTORY
+            columns:
+              - column:
+                  name: ID
+                  type: BIGINT
+                  defaultValueSequenceNext: BID_HISTORY_SEQ_ID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: AUCTION_ID
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: FK_BID_HISTORY_AUCTION
+                    references: AUCTION(ID)
+                    deleteCascade: false
+              - column:
+                  name: BID_ID
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: FK_BID_HISTORY_BID
+                    references: BID(ID)
+                    deleteCascade: false
+              - column:
+                  name: TIME
+                  type: TIMESTAMP
+      rollback:
+        - dropTable:
+            tableName: BID_HISTORY

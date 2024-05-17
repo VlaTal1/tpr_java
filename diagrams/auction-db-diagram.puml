@@ -1,0 +1,40 @@
+@startuml
+
+entity CLIENT {
+    id: BIGINT <<PK>>
+    name: VARCHAR
+    address: VARCHAR
+    phone: VARCHAR
+    passport: VARCHAR
+}
+
+entity BID {
+    id: BIGINT <<PK>>
+    client_id: BIGINT <<FK>>
+    amount: FLOAT
+}
+
+entity AUCTION {
+    id: BIGINT <<PK>>
+    vehicle_id: BIGINT
+    start_time: TIMESTAMP
+    bid_timeout_sec: INTEGER
+    start_price: FLOAT
+    min_bid: FLOAT
+    auction_status: VARCHAR
+}
+
+entity BID_HISTORY {
+    id: BIGINT <<PK>>
+    auction_id: BIGINT <<FK>>
+    bid_id: BIGINT <<FK>>
+    time: TIMESTAMP
+}
+
+
+CLIENT ||--o{ BID
+AUCTION ||--o{ BID
+AUCTION ||--o{ BID_HISTORY
+BID ||--|| BID_HISTORY
+
+@enduml
