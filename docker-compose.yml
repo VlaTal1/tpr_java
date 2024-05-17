@@ -1,17 +1,31 @@
 version: '3.9'
 services:
-  tpr-postgres:
+  postgres-dealership:
     image: postgres:16.2
-    container_name: tpr-postgres
+    container_name: postgres-dealership
     restart: always
     environment:
-      POSTGRES_DB: tpr
+      POSTGRES_DB: dealership
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
     ports:
       - "5433:5432"
     volumes:
-      - tpr-postgres-volume:/var/lib/postgresql/data
+      - postgres-dealership-volume:/var/lib/postgresql/data
+
+  auction-dealership:
+    image: postgres:16.2
+    container_name: postgres-auction
+    restart: always
+    environment:
+      POSTGRES_DB: auction
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    ports:
+      - "6433:5432"
+    volumes:
+      - postgres-auction-volume:/var/lib/postgresql/data
 
 volumes:
-  tpr-postgres-volume:
+  postgres-dealership-volume:
+  postgres-auction-volume:
