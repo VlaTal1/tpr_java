@@ -23,6 +23,8 @@ public abstract class Vehicle {
 
     private int year;
 
+    private boolean isUsed;
+
     public abstract int calculateCredit();
 }
 

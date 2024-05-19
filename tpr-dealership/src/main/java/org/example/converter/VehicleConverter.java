@@ -36,7 +36,8 @@ public class VehicleConverter implements Converter<VehicleDTO, Vehicle> {
                 modelConverter.fromDTO(DTO.getModel()),
                 colorConverter.fromDTO(DTO.getColor()),
                 DTO.getPrice(),
-                DTO.getYear());
+                DTO.getYear(),
+                DTO.isUsed());
     }
 
     @Override
@@ -48,6 +49,7 @@ public class VehicleConverter implements Converter<VehicleDTO, Vehicle> {
                 .color(colorConverter.toDTO(BOM.getColor()))
                 .price(BOM.getPrice())
                 .year(BOM.getYear())
+                .isUsed(BOM.isUsed())
                 .build();
 
         if (BOM instanceof Motorcycle) {

@@ -35,6 +35,10 @@ public class AuctionService {
         return auctionConverter.fromDTO(auctionDTO);
     }
 
+    public Auction create(Auction auction) {
+        return null;
+    }
+
     private void startAuctionTimer(Auction auction) {
         long timeout = auction.getBidTimeoutSec();
         timerManager.scheduleTimer(auction.getId(), () -> {

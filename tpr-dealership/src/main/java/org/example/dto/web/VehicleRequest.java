@@ -29,4 +29,6 @@ public class VehicleRequest {
     private int year;
 
     private Type type;
+
+    private boolean isUsed;
 }

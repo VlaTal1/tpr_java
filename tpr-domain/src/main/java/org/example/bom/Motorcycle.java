@@ -6,8 +6,8 @@ public class Motorcycle extends Vehicle {
 
     private final double annualInterestRate = 0.08; // Річна процентна ставка 8%
 
-    public Motorcycle(Long id, int amount, Model model, Color color, float price, int year) {
-        super(id, amount, model, color, price, year);
+    public Motorcycle(Long id, int amount, Model model, Color color, float price, int year, boolean isUsed) {
+        super(id, amount, model, color, price, year, isUsed);
     }
 
     @Override

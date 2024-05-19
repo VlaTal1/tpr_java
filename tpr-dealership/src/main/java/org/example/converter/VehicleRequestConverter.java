@@ -31,7 +31,8 @@ public class VehicleRequestConverter implements Converter<VehicleRequest, Vehicl
                 DTO.getModel(),
                 DTO.getColor(),
                 DTO.getPrice(),
-                DTO.getYear());
+                DTO.getYear(),
+                DTO.isUsed());
     }
 
     @Override

@@ -35,4 +35,8 @@ public class VehicleDTO {
 
     @Column(name = "YEAR")
     private Integer year;
+
+    // TODO Add isUsed to tests
+    @Column(name = "IS_USED")
+    private boolean isUsed;
 }
