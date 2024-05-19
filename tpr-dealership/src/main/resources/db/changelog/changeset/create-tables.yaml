@@ -177,6 +177,9 @@ databaseChangeLog:
               - column:
                   name: YEAR
                   type: INT
+              - column:
+                  name: IS_USED
+                  type: BOOLEAN
       rollback:
         - dropTable:
             tableName: VEHICLE
