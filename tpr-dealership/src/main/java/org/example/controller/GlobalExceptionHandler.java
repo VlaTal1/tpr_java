@@ -1,10 +1,7 @@
 package org.example.controller;
 
 import org.example.dto.web.ErrorResponse;
-import org.example.exception.ClientAlreadyExistsException;
-import org.example.exception.NotFoundException;
-import org.example.exception.PhoneAlreadyUsedException;
-import org.example.exception.VehicleOutOfStockException;
+import org.example.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +46,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<ErrorResponse> handleClientAlreadyExistsException(ClientAlreadyExistsException ex) {
         ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.CONFLICT.value(), ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatusCode.valueOf(errorResponse.status()));
+    }
+
+    @ExceptionHandler(VehicleNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ErrorResponse> handleVehicleNotFoundException(VehicleNotFoundException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatusCode.valueOf(errorResponse.status()));
     }
 }
