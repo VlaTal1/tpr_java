@@ -2,6 +2,7 @@ package org.example.service.VehicleService;
 
 import org.example.bom.Vehicle;
 import org.example.exception.NotFoundException;
+import org.example.exception.VehicleNotFoundException;
 
 public interface VehicleService {
 
@@ -14,4 +15,6 @@ public interface VehicleService {
     Vehicle findById(Long id) throws NotFoundException;
 
     boolean isAvailable(Long id) throws NotFoundException;
+
+    Vehicle getById(Long vehicleId) throws VehicleNotFoundException;
 }

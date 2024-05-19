@@ -8,10 +8,7 @@ import org.example.exception.NotFoundException;
 import org.example.service.VehicleService.VehicleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,5 +24,10 @@ public class VehicleController {
             @RequestBody VehicleRequest vehicleRequest) throws NotFoundException {
         Vehicle savedVehicle = vehicleService.save(vehicleRequestConverter.fromDTO(vehicleRequest));
         return ResponseEntity.status(HttpStatus.CREATED).body(savedVehicle);
+    }
+
+    @GetMapping("/{vehicleId}")
+    public ResponseEntity<Vehicle> get(@PathVariable("vehicleId") Long vehicleId) throws NotFoundException {
+        return ResponseEntity.status(HttpStatus.OK).body(vehicleService.findById(vehicleId));
     }
 }

@@ -5,6 +5,7 @@ import org.example.bom.*;
 import org.example.converter.Converter;
 import org.example.dto.db.VehicleDTO;
 import org.example.exception.NotFoundException;
+import org.example.exception.VehicleNotFoundException;
 import org.example.printer.MotorcyclePrinter;
 import org.example.printer.PassengerCarPrinter;
 import org.example.printer.TruckPrinter;
@@ -91,6 +92,12 @@ public class VehicleServiceImpl implements VehicleService {
         VehicleDTO vehicleDTO = vehicleRepository.findById(id).orElse(null);
         if (vehicleDTO == null) throw new NotFoundException(STR."Vehicle with id \{id} not found");
         return vehicleDTO.getAmount() > 0;
+    }
+
+    @Override
+    public Vehicle getById(Long vehicleId) throws VehicleNotFoundException {
+        VehicleDTO vehicleDTO = vehicleRepository.findById(vehicleId).orElseThrow(() -> new VehicleNotFoundException(STR."Vehicle with id \{vehicleId} not found"));
+        return vehicleConverter.fromDTO(vehicleDTO);
     }
 
     private void checkCanSave(Vehicle vehicle) throws NotFoundException {
