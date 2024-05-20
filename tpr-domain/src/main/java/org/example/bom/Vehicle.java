@@ -1,5 +1,7 @@
 package org.example.bom;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +11,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Motorcycle.class, name = "MOTORCYCLE"),
+        @JsonSubTypes.Type(value = Truck.class, name = "TRUCK"),
+        @JsonSubTypes.Type(value = PassengerCar.class, name = "PASSENGER_CAR")
+})
 public abstract class Vehicle {
 
     private Long id;
