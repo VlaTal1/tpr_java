@@ -9,8 +9,6 @@ import lombok.*;
 @Builder
 public class BidRequest {
 
-    private Long id;
-
     private Long clientId;
 
     private Float amount;

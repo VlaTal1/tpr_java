@@ -7,10 +7,13 @@ import org.example.bom.Vehicle;
 import org.example.connector.VehicleConnector;
 import org.example.converter.AuctionConverter;
 import org.example.dto.db.AuctionDTO;
+import org.example.dto.db.BidHistoryDTO;
 import org.example.exception.*;
 import org.example.repository.AuctionRepository;
+import org.example.repository.BidHistoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +22,8 @@ import java.util.concurrent.TimeUnit;
 public class AuctionService {
 
     private final AuctionRepository auctionRepository;
+
+    private final BidHistoryRepository bidHistoryRepository;
 
     private final AuctionConverter auctionConverter;
 
@@ -83,7 +88,8 @@ public class AuctionService {
 
     private void endAuction(Long auctionId) throws AuctionNotFoundException {
         AuctionDTO auctionDTO = auctionRepository.findById(auctionId).orElseThrow(() -> new AuctionNotFoundException(STR."Auction with id \{auctionId} not found"));
-        auctionDTO.setAuctionStatus(AuctionStatus.ENDED.name());
+        List<BidHistoryDTO> bidHistoryDTO = bidHistoryRepository.findAllByAuction(auctionDTO);
+        auctionDTO.setAuctionStatus(bidHistoryDTO.isEmpty() ? AuctionStatus.CLOSED.name() : AuctionStatus.ENDED.name());
         auctionRepository.save(auctionDTO);
         timerManager.cancelTimer(auctionId);
     }
