@@ -3,8 +3,10 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.bom.Vehicle;
 import org.example.converter.Converter;
+import org.example.dto.db.VehicleDTO;
 import org.example.dto.web.VehicleRequest;
 import org.example.exception.NotFoundException;
+import org.example.exception.VehicleNotFoundException;
 import org.example.service.VehicleService.VehicleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +29,7 @@ public class VehicleController {
     }
 
     @GetMapping("/{vehicleId}")
-    public ResponseEntity<Vehicle> get(@PathVariable("vehicleId") Long vehicleId) throws NotFoundException {
-        return ResponseEntity.status(HttpStatus.OK).body(vehicleService.findById(vehicleId));
+    public ResponseEntity<VehicleDTO> get(@PathVariable("vehicleId") Long vehicleId) throws VehicleNotFoundException {
+        return ResponseEntity.status(HttpStatus.OK).body(vehicleService.getById(vehicleId));
     }
 }
