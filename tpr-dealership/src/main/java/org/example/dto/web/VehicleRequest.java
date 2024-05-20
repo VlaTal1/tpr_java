@@ -30,5 +30,6 @@ public class VehicleRequest {
 
     private Type type;
 
+    @JsonProperty("isUsed")
     private boolean isUsed;
 }
