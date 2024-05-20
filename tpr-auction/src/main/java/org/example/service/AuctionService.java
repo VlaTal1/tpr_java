@@ -3,10 +3,11 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import org.example.bom.Auction;
 import org.example.bom.AuctionStatus;
+import org.example.bom.Vehicle;
+import org.example.connector.VehicleConnector;
 import org.example.converter.AuctionConverter;
 import org.example.dto.db.AuctionDTO;
-import org.example.exception.AuctionEndedException;
-import org.example.exception.AuctionNotFoundException;
+import org.example.exception.*;
 import org.example.repository.AuctionRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,8 @@ public class AuctionService {
 
     private final TimerManager timerManager;
 
+    private final VehicleConnector vehicleConnector;
+
     public void startAuction(Long auctionId) throws AuctionNotFoundException {
         AuctionDTO auctionDTO = auctionRepository.findById(auctionId).orElseThrow(() -> new AuctionNotFoundException(STR."Auction with id \{auctionId} not found"));
         auctionDTO.setAuctionStatus(AuctionStatus.STARTED.name());
@@ -35,8 +38,26 @@ public class AuctionService {
         return auctionConverter.fromDTO(auctionDTO);
     }
 
-    public Auction create(Auction auction) {
-        return null;
+    public Auction create(Auction auction) throws VehicleNotFoundException, VehicleNotUsedException, BadRequestException {
+        validateAuction(auction);
+        AuctionDTO auctionDTO = auctionRepository.save(auctionConverter.toDTO(auction));
+        return auctionConverter.fromDTO(auctionDTO);
+    }
+
+    private void validateAuction(Auction auction) throws VehicleNotFoundException, VehicleNotUsedException, BadRequestException {
+        Vehicle vehicle = vehicleConnector.get(auction.getVehicleId());
+        if (vehicle == null)
+            throw new VehicleNotFoundException(STR."Vehicle with id \{auction.getVehicleId()} not found");
+        if (!vehicle.isUsed())
+            throw new VehicleNotUsedException(STR."Vehicle with id \{auction.getVehicleId()} is not used");
+        if (auction.getBidTimeoutSec() < 10)
+            throw new BadRequestException("Bid timout cannot not be less than 10 seconds!");
+        if (auction.getStartPrice() < 0)
+            throw new BadRequestException("Start price cannot be less than 0!");
+        if (auction.getMinBid() < 50)
+            throw new BadRequestException("Minimum bid cannot be less than 50!");
+        if (auction.getAuctionStatus() != AuctionStatus.OPENED)
+            throw new BadRequestException("New auction can only have status OPENED!");
     }
 
     private void startAuctionTimer(Auction auction) {
