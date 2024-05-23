@@ -4,5 +4,5 @@ import org.example.bom.Vehicle;
 
 public interface VehiclePrinter {
 
-    String print(Vehicle vehicle);
+    String generatePrintableString(Vehicle vehicle);
 }

@@ -58,7 +58,7 @@ public class VehicleServiceImpl implements VehicleService {
     public String printVehicle(Vehicle vehicle) {
         VehiclePrinter printer = printers.get(vehicle.getClass());
         if (printer != null) {
-            return printer.print(vehicle);
+            return printer.generatePrintableString(vehicle);
         } else {
             return "No printer found";
         }

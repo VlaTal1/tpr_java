@@ -6,7 +6,7 @@ import org.example.bom.Vehicle;
 public class TruckPrinter implements VehiclePrinter {
 
     @Override
-    public String print(Vehicle vehicle) {
+    public String generatePrintableString(Vehicle vehicle) {
         Truck truck = (Truck) vehicle;
         return "Vehicle ID: " + truck.getId() + "\n" +
                 "Amount: " + truck.getAmount() + "\n" +
