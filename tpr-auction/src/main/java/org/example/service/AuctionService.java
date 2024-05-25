@@ -86,7 +86,7 @@ public class AuctionService {
         }
     }
 
-    private void endAuction(Long auctionId) throws AuctionNotFoundException {
+    protected void endAuction(Long auctionId) throws AuctionNotFoundException {
         AuctionDTO auctionDTO = auctionRepository.findById(auctionId).orElseThrow(() -> new AuctionNotFoundException(STR."Auction with id \{auctionId} not found"));
         List<BidHistoryDTO> bidHistoryDTO = bidHistoryRepository.findAllByAuction(auctionDTO);
         auctionDTO.setAuctionStatus(bidHistoryDTO.isEmpty() ? AuctionStatus.CLOSED.name() : AuctionStatus.ENDED.name());
