@@ -63,7 +63,7 @@ public class VehicleServiceTest {
 
     @Test
     public void testPrintVehiclePassengerCar() {
-        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022);
+        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022, false);
         String expectedOutput = "Vehicle ID: 1\n" +
                 "Amount: 5000\n" +
                 "Model: ModelA\n" +
@@ -77,7 +77,7 @@ public class VehicleServiceTest {
 
     @Test
     public void testPrintVehicleTruck() {
-        Vehicle vehicle = new Truck(1L, 5000, model, color, 6000, 2022);
+        Vehicle vehicle = new Truck(1L, 5000, model, color, 6000, 2022, false);
         String expectedOutput = "Vehicle ID: 1\n" +
                 "Amount: 5000\n" +
                 "Model: ModelA\n" +
@@ -91,7 +91,7 @@ public class VehicleServiceTest {
 
     @Test
     public void testPrintVehicleMotorcycle() {
-        Vehicle vehicle = new Motorcycle(1L, 5000, model, color, 6000, 2022);
+        Vehicle vehicle = new Motorcycle(1L, 5000, model, color, 6000, 2022, false);
         String expectedOutput = "Vehicle ID: 1\n" +
                 "Amount: 5000\n" +
                 "Model: ModelA\n" +
@@ -105,7 +105,7 @@ public class VehicleServiceTest {
 
     @Test
     public void testPrintVehicleNotFound() {
-        Vehicle vehicle = new Vehicle(1L, 5000, model, color, 6000, 2022) {
+        Vehicle vehicle = new Vehicle(1L, 5000, model, color, 6000, 2022, false) {
             @Override
             public int calculateCredit() {
                 return 0;
@@ -121,13 +121,13 @@ public class VehicleServiceTest {
         Manufacturer manufacturer = new Manufacturer(1L, "manufacturer", country);
         Model model = new Model(1L, "ModelA", manufacturer);
         Color color = new Color(1L, "Red");
-        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022);
+        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022, false);
 
         CountryDTO countryDTO = new CountryDTO(1L, "country");
         ManufacturerDTO manufacturerDTO = new ManufacturerDTO(1L, "manufacturer", countryDTO);
         ModelDTO modelDTO = new ModelDTO(1L, "ModelA", manufacturerDTO);
         ColorDTO colorDTO = new ColorDTO(1L, "Red");
-        VehicleDTO vehicleDTO = new VehicleDTO(1L, 5000, modelDTO, Type.PASSENGER_CAR.toString(), colorDTO, 6000F, 2022);
+        VehicleDTO vehicleDTO = new VehicleDTO(1L, 5000, modelDTO, Type.PASSENGER_CAR.toString(), colorDTO, 6000F, 2022, false);
 
         when(colorService.findById(color.getId())).thenReturn(color);
         when(modelService.findById(model.getId())).thenReturn(model);
@@ -148,13 +148,13 @@ public class VehicleServiceTest {
         Manufacturer manufacturer = new Manufacturer(1L, "manufacturer", country);
         Model model = new Model(1L, "ModelA", manufacturer);
         Color color = new Color(1L, "Red");
-        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022);
+        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022, false);
 
         CountryDTO countryDTO = new CountryDTO(1L, "country");
         ManufacturerDTO manufacturerDTO = new ManufacturerDTO(1L, "manufacturer", countryDTO);
         ModelDTO modelDTO = new ModelDTO(1L, "ModelA", manufacturerDTO);
         ColorDTO colorDTO = new ColorDTO(1L, "Red");
-        VehicleDTO vehicleDTO = new VehicleDTO(1L, 5000, modelDTO, Type.PASSENGER_CAR.toString(), colorDTO, 6000F, 2022);
+        VehicleDTO vehicleDTO = new VehicleDTO(1L, 5000, modelDTO, Type.PASSENGER_CAR.toString(), colorDTO, 6000F, 2022, false);
 
         when(vehicleConverter.toDTO(vehicle)).thenReturn(vehicleDTO);
         when(vehicleRepository.save(vehicleDTO)).thenReturn(vehicleDTO);
@@ -170,13 +170,13 @@ public class VehicleServiceTest {
         Manufacturer manufacturer = new Manufacturer(1L, "manufacturer", country);
         Model model = new Model(1L, "ModelA", manufacturer);
         Color color = new Color(1L, "Red");
-        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022);
+        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022, false);
 
         CountryDTO countryDTO = new CountryDTO(1L, "country");
         ManufacturerDTO manufacturerDTO = new ManufacturerDTO(1L, "manufacturer", countryDTO);
         ModelDTO modelDTO = new ModelDTO(1L, "ModelA", manufacturerDTO);
         ColorDTO colorDTO = new ColorDTO(1L, "Red");
-        VehicleDTO vehicleDTO = new VehicleDTO(1L, 5000, modelDTO, Type.PASSENGER_CAR.toString(), colorDTO, 6000F, 2022);
+        VehicleDTO vehicleDTO = new VehicleDTO(1L, 5000, modelDTO, Type.PASSENGER_CAR.toString(), colorDTO, 6000F, 2022, false);
 
         when(vehicleRepository.findById(vehicle.getId())).thenReturn(Optional.of(vehicleDTO));
         when(vehicleConverter.fromDTO(vehicleDTO)).thenReturn(vehicle);
@@ -200,13 +200,13 @@ public class VehicleServiceTest {
         Manufacturer manufacturer = new Manufacturer(1L, "manufacturer", country);
         Model model = new Model(1L, "ModelA", manufacturer);
         Color color = new Color(1L, "Red");
-        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022);
+        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022, false);
 
         CountryDTO countryDTO = new CountryDTO(1L, "country");
         ManufacturerDTO manufacturerDTO = new ManufacturerDTO(1L, "manufacturer", countryDTO);
         ModelDTO modelDTO = new ModelDTO(1L, "ModelA", manufacturerDTO);
         ColorDTO colorDTO = new ColorDTO(1L, "Red");
-        VehicleDTO vehicleDTO = new VehicleDTO(1L, 5000, modelDTO, Type.PASSENGER_CAR.toString(), colorDTO, 6000F, 2022);
+        VehicleDTO vehicleDTO = new VehicleDTO(1L, 5000, modelDTO, Type.PASSENGER_CAR.toString(), colorDTO, 6000F, 2022, false);
 
         when(vehicleRepository.findById(vehicle.getId())).thenReturn(Optional.of(vehicleDTO));
 
@@ -220,13 +220,13 @@ public class VehicleServiceTest {
         Manufacturer manufacturer = new Manufacturer(1L, "manufacturer", country);
         Model model = new Model(1L, "ModelA", manufacturer);
         Color color = new Color(1L, "Red");
-        Vehicle vehicle = new PassengerCar(1L, 0, model, color, 6000, 2022);
+        Vehicle vehicle = new PassengerCar(1L, 0, model, color, 6000, 2022, false);
 
         CountryDTO countryDTO = new CountryDTO(1L, "country");
         ManufacturerDTO manufacturerDTO = new ManufacturerDTO(1L, "manufacturer", countryDTO);
         ModelDTO modelDTO = new ModelDTO(1L, "ModelA", manufacturerDTO);
         ColorDTO colorDTO = new ColorDTO(1L, "Red");
-        VehicleDTO vehicleDTO = new VehicleDTO(1L, 0, modelDTO, Type.PASSENGER_CAR.toString(), colorDTO, 6000F, 2022);
+        VehicleDTO vehicleDTO = new VehicleDTO(1L, 0, modelDTO, Type.PASSENGER_CAR.toString(), colorDTO, 6000F, 2022, false);
 
         when(vehicleRepository.findById(vehicle.getId())).thenReturn(Optional.of(vehicleDTO));
 

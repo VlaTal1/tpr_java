@@ -24,7 +24,7 @@ class MotorcycleFactoryTest {
     void createVehicle() {
         Model model = new Model();
         Color color = new Color();
-        Vehicle vehicle = motorcycleFactory.createVehicle(1L, 5000, model, color, 6000, 2022);
+        Vehicle vehicle = motorcycleFactory.createVehicle(1L, 5000, model, color, 6000, 2022, false);
 
         assertNotNull(vehicle);
         assertInstanceOf(Motorcycle.class, vehicle);
@@ -34,5 +34,6 @@ class MotorcycleFactoryTest {
         assertEquals(color, vehicle.getColor());
         assertEquals(6000, vehicle.getPrice());
         assertEquals(2022, vehicle.getYear());
+        assertFalse(vehicle.isUsed());
     }
 }

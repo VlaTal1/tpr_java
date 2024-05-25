@@ -15,19 +15,19 @@ public class VehicleTest {
 
     @Test
     public void testMotorcycleCalculateCredit() {
-        Motorcycle motorcycle = new Motorcycle(1L, 5000, model, color, 6000, 2022);
+        Motorcycle motorcycle = new Motorcycle(1L, 5000, model, color, 6000, 2022, false);
         assertEquals(188, motorcycle.calculateCredit());
     }
 
     @Test
     public void testPassengerCarCalculateCredit() {
-        PassengerCar passengerCar = new PassengerCar(1L, 5000, model, color, 6000, 2022);
+        PassengerCar passengerCar = new PassengerCar(1L, 5000, model, color, 6000, 2022, false);
         assertEquals(91, passengerCar.calculateCredit());
     }
 
     @Test
     public void testTruckCalculateCredit() {
-        Truck truck = new Truck(1L, 5000, model, color, 6000, 2022);
+        Truck truck = new Truck(1L, 5000, model, color, 6000, 2022, false);
         assertEquals(15, truck.calculateCredit());
     }
 }

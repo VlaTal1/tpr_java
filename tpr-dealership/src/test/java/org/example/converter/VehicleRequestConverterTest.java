@@ -22,7 +22,7 @@ class VehicleRequestConverterTest {
     void fromDTO() {
         Model model = new Model();
         Color color = new Color();
-        VehicleRequest vehicleDTO = new VehicleRequest(1L, 5000, model, color, 6000F, 2022, Type.PASSENGER_CAR);
+        VehicleRequest vehicleDTO = new VehicleRequest(1L, 5000, model, color, 6000F, 2022, Type.PASSENGER_CAR, false);
 
         Vehicle actualVehicle = vehicleRequestConverter.fromDTO(vehicleDTO);
 
@@ -33,6 +33,7 @@ class VehicleRequestConverterTest {
         assertEquals(color, actualVehicle.getColor());
         assertEquals(6000F, actualVehicle.getPrice());
         assertEquals(2022, actualVehicle.getYear());
+        assertFalse(actualVehicle.isUsed());
         assertInstanceOf(PassengerCar.class, actualVehicle);
     }
 

@@ -20,7 +20,7 @@ public class VehiclePrinterTest {
     public void testMotorcyclePrinter() {
 
         // Создание объекта Motorcycle
-        Motorcycle motorcycle = new Motorcycle(1L, 5000, model, color, 6000, 2022);
+        Motorcycle motorcycle = new Motorcycle(1L, 5000, model, color, 6000, 2022, false);
 
         // Создание объекта MotorcyclePrinter
         VehiclePrinter printer = new MotorcyclePrinter();
@@ -34,13 +34,13 @@ public class VehiclePrinterTest {
                 "Price: 6000.0\n" +
                 "Year: 2022\n" +
                 "Credit: 188\n";
-        assertEquals(expectedOutput, printer.print(motorcycle));
+        assertEquals(expectedOutput, printer.generatePrintableString(motorcycle));
     }
 
     @Test
     public void testPassengerCarPrinter() {
         // Создание объекта PassengerCar
-        PassengerCar car = new PassengerCar(1L, 5000, model, color, 6000, 2022);
+        PassengerCar car = new PassengerCar(1L, 5000, model, color, 6000, 2022, false);
 
         // Создание объекта PassengerCarPrinter
         VehiclePrinter printer = new PassengerCarPrinter();
@@ -54,13 +54,13 @@ public class VehiclePrinterTest {
                 "Price: 6000.0\n" +
                 "Year: 2022\n" +
                 "Credit: 91\n";
-        assertEquals(expectedOutput, printer.print(car));
+        assertEquals(expectedOutput, printer.generatePrintableString(car));
     }
 
     @Test
     public void testTruckPrinter() {
         // Создание объекта Truck
-        Truck truck = new Truck(1L, 5000, model, color, 6000, 2022);
+        Truck truck = new Truck(1L, 5000, model, color, 6000, 2022, false);
 
         // Создание объекта TruckPrinter
         VehiclePrinter printer = new TruckPrinter();
@@ -74,6 +74,6 @@ public class VehiclePrinterTest {
                 "Price: 6000.0\n" +
                 "Year: 2022\n" +
                 "Credit: 15\n";
-        assertEquals(expectedOutput, printer.print(truck));
+        assertEquals(expectedOutput, printer.generatePrintableString(truck));
     }
 }

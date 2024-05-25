@@ -32,7 +32,7 @@ class VehicleConverterTest {
     void fromDTO() {
         ModelDTO modelDTO = new ModelDTO();
         ColorDTO colorDTO = new ColorDTO();
-        VehicleDTO vehicleDTO = new VehicleDTO(1L, 5000, modelDTO, Type.PASSENGER_CAR.toString(), colorDTO, 6000F, 2022);
+        VehicleDTO vehicleDTO = new VehicleDTO(1L, 5000, modelDTO, Type.PASSENGER_CAR.toString(), colorDTO, 6000F, 2022, false);
 
         Model model = new Model();
         Color color = new Color();
@@ -48,6 +48,7 @@ class VehicleConverterTest {
         assertEquals(color, actualVehicle.getColor());
         assertEquals(6000, actualVehicle.getPrice());
         assertEquals(2022, actualVehicle.getYear());
+        assertFalse(actualVehicle.isUsed());
         assertInstanceOf(PassengerCar.class, actualVehicle);
     }
 
@@ -55,7 +56,7 @@ class VehicleConverterTest {
     void toDTO() {
         Model model = new Model();
         Color color = new Color();
-        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022);
+        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022, false);
 
         ModelDTO modelDTO = new ModelDTO();
         ColorDTO colorDTO = new ColorDTO();
@@ -71,6 +72,7 @@ class VehicleConverterTest {
         assertEquals(colorDTO, actualVehicle.getColor());
         assertEquals(6000, actualVehicle.getPrice());
         assertEquals(2022, actualVehicle.getYear());
+        assertFalse(actualVehicle.isUsed());
         assertEquals(Type.PASSENGER_CAR.toString(), actualVehicle.getType());
     }
 }

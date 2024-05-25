@@ -54,7 +54,7 @@ class SalesServiceFacadeTest {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         Model model = new Model();
         Color color = new Color();
-        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 30000, 2022);
+        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 30000, 2022, false);
         Client client = new Client(1L, "John", "Address", "+380984785740", "UA023948274", 3);
         Employee employee = new Employee(1L, "Alex", "+38097847567", "Sales manager");
         Deal deal = new Deal(1L, vehicle, client, employee, timestamp, 29100F, PaymentType.CASH, 0F, 100F);
@@ -93,7 +93,7 @@ class SalesServiceFacadeTest {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         Model model = new Model();
         Color color = new Color();
-        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 30000, 2022);
+        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 30000, 2022, false);
         Client client = new Client(1L, "John", "Address", "+380984785740", "UA023948274", 3);
         Employee employee = new Employee(1L, "Alex", "+38097847567", "Sales manager");
         Deal deal = new Deal(1L, vehicle, client, employee, timestamp, 30000F, PaymentType.CREDIT, 100F, 0F);

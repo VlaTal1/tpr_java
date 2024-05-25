@@ -42,7 +42,7 @@ class DealServiceTest {
         Manufacturer manufacturer = new Manufacturer(1L, "manufacturer", country);
         Model model = new Model(1L, "ModelA", manufacturer);
         Color color = new Color(1L, "Red");
-        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022);
+        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022, false);
         Client client = new Client(1L, "John", "Address", "+380984785740", "UA023948274", 3);
         Employee employee = new Employee(1L, "Alex", "+38097847567", "Sales manages");
         Deal deal = new Deal(1L, vehicle, client, employee, timestamp, 10000F, PaymentType.CASH, 100F, 0F);
@@ -51,7 +51,7 @@ class DealServiceTest {
         ManufacturerDTO manufacturerDTO = new ManufacturerDTO(1L, "manufacturer", countryDTO);
         ModelDTO modelDTO = new ModelDTO(1L, "ModelA", manufacturerDTO);
         ColorDTO colorDTO = new ColorDTO(1L, "Red");
-        VehicleDTO vehicleDTO = new VehicleDTO(1L, 5000, modelDTO, Type.PASSENGER_CAR.toString(), colorDTO, 6000F, 2022);
+        VehicleDTO vehicleDTO = new VehicleDTO(1L, 5000, modelDTO, Type.PASSENGER_CAR.toString(), colorDTO, 6000F, 2022, false);
         ClientDTO clientDTO = new ClientDTO(1L, "John", "Address", "+380984785740", "UA023948274", 3);
         EmployeeDTO employeeDTO = new EmployeeDTO(1L, "Alex", "+38097847567", "Sales manages");
         DealDTO dealDTO = new DealDTO(1L, vehicleDTO, clientDTO, employeeDTO, timestamp, 10000F, PaymentType.CASH.toString(), 100F, 0F);

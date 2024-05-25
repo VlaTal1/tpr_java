@@ -38,9 +38,9 @@ class VehicleControllerTest {
     void addTest() throws Exception {
         Model model = new Model();
         Color color = new Color();
-        VehicleRequest vehicleRequest = new VehicleRequest(1L, 5000, model, color, 6000F, 2022, Type.PASSENGER_CAR);
+        VehicleRequest vehicleRequest = new VehicleRequest(1L, 5000, model, color, 6000F, 2022, Type.PASSENGER_CAR, false);
 
-        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022);
+        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022, false);
         when(vehicleRequestConverter.fromDTO(any(VehicleRequest.class))).thenReturn(vehicle);
         when(vehicleService.save(any(Vehicle.class))).thenReturn(vehicle);
 
@@ -58,9 +58,9 @@ class VehicleControllerTest {
     void addTest_NotFound() throws Exception {
         Model model = new Model();
         Color color = new Color();
-        VehicleRequest vehicleRequest = new VehicleRequest(1L, 5000, model, color, 6000F, 2022, Type.PASSENGER_CAR);
+        VehicleRequest vehicleRequest = new VehicleRequest(1L, 5000, model, color, 6000F, 2022, Type.PASSENGER_CAR, false);
 
-        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022);
+        Vehicle vehicle = new PassengerCar(1L, 5000, model, color, 6000, 2022, false);
         when(vehicleRequestConverter.fromDTO(any(VehicleRequest.class))).thenReturn(vehicle);
         when(vehicleService.save(any(Vehicle.class))).thenThrow(new NotFoundException("Vehicle not found"));
 
