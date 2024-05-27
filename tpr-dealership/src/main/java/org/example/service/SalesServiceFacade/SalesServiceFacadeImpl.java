@@ -17,6 +17,7 @@ import org.example.strategy.SalesContext;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -44,13 +45,13 @@ public class SalesServiceFacadeImpl implements SalesServiceFacade {
         vehicle.setAmount(vehicle.getAmount() - 1);
         vehicle = vehicleService.update(vehicle);
 
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Timestamp currentDateTime = Timestamp.valueOf(LocalDateTime.now());
 
         Deal deal = Deal.builder()
                 .vehicle(vehicle)
                 .client(client)
                 .employee(employee)
-                .date(timestamp)
+                .date(currentDateTime)
                 .build();
 
         if (dealRequest.getPaymentType().equals(PaymentType.CASH)) {
