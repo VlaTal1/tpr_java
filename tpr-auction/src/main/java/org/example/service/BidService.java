@@ -3,7 +3,6 @@ package org.example.service;
 import lombok.RequiredArgsConstructor;
 import org.example.bom.Auction;
 import org.example.bom.AuctionStatus;
-import org.example.bom.BidHistory;
 import org.example.bom.Client;
 import org.example.converter.Converter;
 import org.example.dto.db.AuctionDTO;
@@ -19,7 +18,6 @@ import org.example.repository.BidHistoryRepository;
 import org.example.repository.BidRepository;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -43,14 +41,9 @@ public class BidService {
         Auction auction = auctionService.findById(auctionId);
         if (auction.getAuctionStatus() == AuctionStatus.STARTED) {
             Client client = clientService.findById(bidRequest.getClientId());
-            if (client == null)
-                throw new ClientNotFoundException(STR."Client with id \{bidRequest.getClientId()} not found");
+            validateClient(client);
             AuctionDTO auctionDTO = auctionConverter.toDTO(auction);
-            BidHistoryDTO lastBid = bidHistoryRepository.findFirstByAuctionOrderByTimeDesc(auctionDTO);
-            if (lastBid != null && bidRequest.getAmount() - lastBid.getBid().getAmount() < auction.getMinBid())
-                throw new BadRequestException(STR."Bid amount cannot be less then min bid [\{auction.getMinBid()}]");
-            if (lastBid != null && lastBid.getBid().getAmount() >= bidRequest.getAmount())
-                throw new BadRequestException("Bid amount cannot be less then last bid");
+            validateBid(auctionDTO, bidRequest.getAmount(), auction.getMinBid());
             BidDTO bidDTO = BidDTO.builder()
                     .client(clientConverter.toDTO(client))
                     .amount(bidRequest.getAmount())
@@ -66,6 +59,20 @@ public class BidService {
         } else {
             throw new RuntimeException("Auction has ended");
         }
+    }
+
+    private void validateClient(Client client) throws ClientNotFoundException {
+        if (client == null)
+            throw new ClientNotFoundException(STR."Client not found");
+    }
+
+    private void validateBid(AuctionDTO auctionDTO, Float amount, Float minBid) throws BadRequestException {
+        BidHistoryDTO lastBid = bidHistoryRepository.findFirstByAuctionOrderByTimeDesc(auctionDTO);
+        if (lastBid != null && amount - lastBid.getBid().getAmount() < minBid)
+            throw new BadRequestException(STR."Bid amount cannot be less then min bid [\{minBid}]");
+        if (lastBid != null && lastBid.getBid().getAmount() >= amount)
+            throw new BadRequestException("Bid amount cannot be less then last bid");
+
     }
 }
 
