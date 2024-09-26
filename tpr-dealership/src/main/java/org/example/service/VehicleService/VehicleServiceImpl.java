@@ -18,7 +18,9 @@ import org.example.service.ModelService.ModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -66,7 +68,13 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public Vehicle save(Vehicle vehicle) throws NotFoundException {
+        Model model = modelService.getOrCreateByName(vehicle.getModel());
+        vehicle.setModel(model);
+        Color color = colorService.getOrCreateByName(vehicle.getColor());
+        vehicle.setColor(color);
+
         checkCanSave(vehicle);
+
         VehicleDTO vehicleDTO = vehicleConverter.toDTO(vehicle);
         vehicleDTO.setId(null);
         VehicleDTO saved = vehicleRepository.save(vehicleDTO);
@@ -74,10 +82,40 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public Vehicle update(Vehicle vehicle) {
+    public List<Vehicle> getAll() {
+        List<VehicleDTO> vehicleDTOS = vehicleRepository.findAll();
+        List<Vehicle> vehicles = new ArrayList<>();
+        vehicleDTOS.forEach(vehicleDTO -> vehicles.add(vehicleConverter.fromDTO(vehicleDTO)));
+        return vehicles;
+    }
+
+    @Override
+    public Vehicle get(Long vehicleId) throws VehicleNotFoundException {
+        VehicleDTO vehicleDTO = getById(vehicleId);
+        return vehicleConverter.fromDTO(vehicleDTO);
+    }
+
+    @Override
+    public Vehicle update(Long vehicleId, Vehicle vehicle) throws VehicleNotFoundException {
+        validateIfExists(vehicleId);
+        vehicle.setId(vehicleId);
+
+        Model model = modelService.getOrCreateByName(vehicle.getModel());
+        vehicle.setModel(model);
+        Color color = colorService.getOrCreateByName(vehicle.getColor());
+        vehicle.setColor(color);
+
         VehicleDTO vehicleDTO = vehicleConverter.toDTO(vehicle);
         VehicleDTO updated = vehicleRepository.save(vehicleDTO);
         return vehicleConverter.fromDTO(updated);
+    }
+
+    @Override
+    public Vehicle delete(Long vehicleId) throws VehicleNotFoundException {
+        validateIfExists(vehicleId);
+        VehicleDTO vehicleDTO = getById(vehicleId);
+        vehicleRepository.deleteById(vehicleId);
+        return vehicleConverter.fromDTO(vehicleDTO);
     }
 
     @Override
@@ -120,22 +158,10 @@ public class VehicleServiceImpl implements VehicleService {
             // TODO test for throw
             throw new NotFoundException(STR."Country with id \{vehicle.getModel().getManufacturer().getCountry().getId()} not found");
     }
-}
 
-//public class VehicleService {
-//
-//    public String printVehicle(Vehicle vehicle) {
-//        if (vehicle instanceof PassengerCar) {
-//            PassengerCarPrinter printer = new PassengerCarPrinter();
-//            return printer.print(vehicle);
-//        } else if (vehicle instanceof Truck) {
-//            TruckPrinter printer = new TruckPrinter();
-//            return printer.print(vehicle);
-//        } else if (vehicle instanceof Motorcycle) {
-//            MotorcyclePrinter printer = new MotorcyclePrinter();
-//            return printer.print(vehicle);
-//        } else {
-//            return "No printer found for vehicle type: " + vehicle.getClass().getSimpleName();
-//        }
-//    }
-//}
+    private void validateIfExists(Long vehicleId) throws VehicleNotFoundException {
+        if (!vehicleRepository.existsById(vehicleId)) {
+            throw new VehicleNotFoundException(STR."Vehicle with id \{vehicleId} not found");
+        }
+    }
+}

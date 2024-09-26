@@ -5,4 +5,6 @@ import org.example.bom.Country;
 public interface CountryService {
 
     Country findById(Long id);
+
+    Country getOrCreateByName(Country country);
 }

@@ -3,10 +3,7 @@ package org.example.service.SalesServiceFacade;
 import lombok.RequiredArgsConstructor;
 import org.example.bom.*;
 import org.example.dto.web.DealRequest;
-import org.example.exception.ClientAlreadyExistsException;
-import org.example.exception.NotFoundException;
-import org.example.exception.PhoneAlreadyUsedException;
-import org.example.exception.VehicleOutOfStockException;
+import org.example.exception.*;
 import org.example.service.ClientService.ClientService;
 import org.example.service.DealService.DealService;
 import org.example.service.EmployeeService.EmployeeService;
@@ -34,7 +31,7 @@ public class SalesServiceFacadeImpl implements SalesServiceFacade {
     private SalesContext salesContext;
 
     @Override
-    public Deal createDeal(DealRequest dealRequest) throws NotFoundException, VehicleOutOfStockException {
+    public Deal createDeal(DealRequest dealRequest) throws NotFoundException, VehicleOutOfStockException, VehicleNotFoundException {
         Vehicle vehicle = vehicleService.findById(dealRequest.getVehicleId());
         if (!vehicleService.isAvailable(vehicle.getId())) {
             throw new VehicleOutOfStockException(STR."Vehicle with id \{vehicle.getId()} is out of stock");
@@ -43,7 +40,7 @@ public class SalesServiceFacadeImpl implements SalesServiceFacade {
         Employee employee = employeeService.findById(dealRequest.getEmployeeId());
 
         vehicle.setAmount(vehicle.getAmount() - 1);
-        vehicle = vehicleService.update(vehicle);
+        vehicle = vehicleService.update(vehicle.getId(), vehicle);
 
         Timestamp currentDateTime = Timestamp.valueOf(LocalDateTime.now());
 

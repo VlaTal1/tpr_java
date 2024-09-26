@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.bom.Deal;
 import org.example.dto.web.DealRequest;
 import org.example.exception.NotFoundException;
+import org.example.exception.VehicleNotFoundException;
 import org.example.exception.VehicleOutOfStockException;
 import org.example.service.SalesServiceFacade.SalesServiceFacade;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class DealController {
 
     @PostMapping("/")
     public ResponseEntity<Deal> add(
-            @RequestBody DealRequest dealRequest) throws NotFoundException, VehicleOutOfStockException {
+            @RequestBody DealRequest dealRequest) throws NotFoundException, VehicleOutOfStockException, VehicleNotFoundException {
         Deal deal = salesServiceFacade.createDeal(dealRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(deal);
     }

@@ -7,4 +7,6 @@ public interface ColorService {
     Color save(Color color);
 
     Color findById(Long id);
+
+    Color getOrCreateByName(Color color);
 }

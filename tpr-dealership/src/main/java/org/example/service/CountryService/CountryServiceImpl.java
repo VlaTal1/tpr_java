@@ -20,4 +20,15 @@ public class CountryServiceImpl implements CountryService {
         CountryDTO countryDTO = countryRepository.findById(id).orElse(null);
         return countryConverter.fromDTO(countryDTO);
     }
+
+    @Override
+    public Country getOrCreateByName(Country country) {
+        CountryDTO countryDTO;
+        countryDTO = countryRepository.findByName(country.getName());
+        if (countryDTO == null) {
+            countryDTO = countryConverter.toDTO(country);
+            countryDTO = countryRepository.save(countryDTO);
+        }
+        return countryConverter.fromDTO(countryDTO);
+    }
 }

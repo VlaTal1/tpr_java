@@ -27,4 +27,17 @@ public class ColorServiceImpl implements ColorService {
         ColorDTO colorDTO = colorRepository.findById(id).orElse(null);
         return colorConverter.fromDTO(colorDTO);
     }
+
+    @Override
+    public Color getOrCreateByName(Color color) {
+        ColorDTO colorDTO;
+        colorDTO = colorRepository.findByName(color.getName());
+
+        if (colorDTO == null) {
+            colorDTO = colorConverter.toDTO(color);
+            colorDTO = colorRepository.save(colorDTO);
+        }
+
+        return colorConverter.fromDTO(colorDTO);
+    }
 }

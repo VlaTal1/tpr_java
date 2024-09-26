@@ -7,4 +7,6 @@ public interface ModelService {
     Model save(Model model);
 
     Model findById(Long id);
+
+    Model getOrCreateByName(Model model);
 }
