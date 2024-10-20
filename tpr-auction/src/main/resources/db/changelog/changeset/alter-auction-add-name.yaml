@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: alter-auction-add-name
+      author: vladyslavtalakh
+      changes:
+        - addColumn:
+            tableName: AUCTION
+            columns:
+              - column:
+                  name: NAME
+                  type: VARCHAR(250)
+      rollback:
+        - dropColumn:
+            tableName: AUCTION
+            columnName: NAME

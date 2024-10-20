@@ -1,6 +1,7 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Not;
 import org.example.bom.Auction;
 import org.example.bom.AuctionStatus;
 import org.example.bom.Vehicle;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -45,8 +47,25 @@ public class AuctionService {
 
     public Auction create(Auction auction) throws VehicleNotFoundException, VehicleNotUsedException, BadRequestException {
         validateAuction(auction);
+
+        Vehicle vehicle = vehicleConnector.get(auction.getVehicleId());
+        auction.setName(STR."\{vehicle.getModel().getManufacturer().getName()} \{vehicle.getModel().getName()} \{vehicle.getYear()}");
+
         AuctionDTO auctionDTO = auctionRepository.save(auctionConverter.toDTO(auction));
         return auctionConverter.fromDTO(auctionDTO);
+    }
+
+    public List<Auction> getAll() {
+        List<AuctionDTO> auctionDTOList = auctionRepository.findAll();
+        return auctionDTOList.stream().map(auctionConverter::fromDTO).toList();
+    }
+
+    public Auction getById(Long auctionId) throws NotFoundException {
+        Optional<AuctionDTO> auctionDTO = auctionRepository.findById(auctionId);
+        if (auctionDTO.isEmpty()) {
+            throw new NotFoundException(STR."Auction with id \{auctionId} not found");
+        }
+        return auctionConverter.fromDTO(auctionDTO.get());
     }
 
     private void validateAuction(Auction auction) throws VehicleNotFoundException, VehicleNotUsedException, BadRequestException {

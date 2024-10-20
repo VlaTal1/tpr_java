@@ -12,6 +12,7 @@ public class AuctionConverter implements Converter<AuctionDTO, Auction> {
     public Auction fromDTO(AuctionDTO dto) {
         return Auction.builder()
                 .id(dto.getId())
+                .name(dto.getName())
                 .vehicleId(dto.getVehicleId())
                 .startTime(dto.getStartTime())
                 .bidTimeoutSec(dto.getBidTimeoutSec())
@@ -25,6 +26,7 @@ public class AuctionConverter implements Converter<AuctionDTO, Auction> {
     public AuctionDTO toDTO(Auction bom) {
         return AuctionDTO.builder()
                 .id(bom.getId())
+                .name(bom.getName())
                 .vehicleId(bom.getVehicleId())
                 .startTime(bom.getStartTime())
                 .bidTimeoutSec(bom.getBidTimeoutSec())

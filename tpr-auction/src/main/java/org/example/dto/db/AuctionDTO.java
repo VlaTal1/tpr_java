@@ -18,6 +18,9 @@ public class AuctionDTO {
     @SequenceGenerator(name = "AUCTION_SEQ_ID", sequenceName = "AUCTION_SEQ_ID", allocationSize = 1)
     private Long id;
 
+    @Column(name = "NAME")
+    private String name;
+
     @Column(name = "VEHICLE_ID")
     private Long vehicleId;
 

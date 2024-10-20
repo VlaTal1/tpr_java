@@ -13,6 +13,8 @@ public class Auction {
 
     private Long id;
 
+    private String name;
+
     private Long vehicleId;
 
     private Timestamp startTime;
