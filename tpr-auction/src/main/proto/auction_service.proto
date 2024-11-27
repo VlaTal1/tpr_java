@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "org.example.grpc";
+option java_outer_classname = "AuctionServiceProto";
+
+message CreateAuctionRequest {
+  string vehicle_id = 1;
+  string name = 2;
+  int32 bid_timeout_sec = 3;
+  float start_price = 4;
+  float min_bid = 5;
+  string auction_status = 6;
+  google.protobuf.Timestamp start_time = 7;
+}
+
+message CreateAuctionResponse {
+  int64 auction_id = 1;
+  string name = 2;
+}
+
+message StartAuctionRequest {
+  int64 auction_id = 1;
+}
+
+message StartAuctionResponse {
+  string status = 1;
+}
+
+service AuctionService {
+  rpc CreateAuction(CreateAuctionRequest) returns (CreateAuctionResponse);
+  rpc StartAuction(StartAuctionRequest) returns (StartAuctionResponse);
+}
