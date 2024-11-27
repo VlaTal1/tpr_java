@@ -1,0 +1,22 @@
+type Query {
+    auctions: [Auction!]!
+    auctionById(id: ID!): Auction!
+}
+
+type Auction {
+    id: ID!
+    name: String!
+    vehicleId: ID!
+    startTime: String!
+    bidTimeoutSec: Int!
+    startPrice: Float!
+    minBid: Float!
+    auctionStatus: AuctionStatus!
+}
+
+enum AuctionStatus {
+    OPENED
+    STARTED
+    ENDED
+    CLOSED
+}

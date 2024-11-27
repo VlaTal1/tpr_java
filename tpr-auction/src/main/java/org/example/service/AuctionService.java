@@ -1,7 +1,6 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Not;
 import org.example.bom.Auction;
 import org.example.bom.AuctionStatus;
 import org.example.bom.Vehicle;
