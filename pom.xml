@@ -16,12 +16,16 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <logback.version>1.4.7</logback.version>
+        <protobuf.version>3.18.0</protobuf.version>
+        <protobuf-plugin.version>0.6.1</protobuf-plugin.version>
+        <grpc.version>1.53.0</grpc.version>
     </properties>
 
     <modules>
         <module>tpr-dealership</module>
         <module>tpr-auction</module>
         <module>tpr-domain</module>
+        <module>tpr-interface-gprc</module>
     </modules>
 
     <parent>
