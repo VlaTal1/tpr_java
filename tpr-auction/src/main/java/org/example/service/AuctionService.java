@@ -93,6 +93,16 @@ public class AuctionService {
         return auctionConverter.fromDTO(auctionDTO.get());
     }
 
+    public List<Auction> getByName(String name) throws NotFoundException {
+        List<AuctionDTO> auctionDTOs = auctionRepository.findByNameContaining(name);
+        if (auctionDTOs.isEmpty()) {
+            throw new NotFoundException(String.format("No auctions found containing name: %s", name));
+        }
+        return auctionDTOs.stream()
+                .map(auctionConverter::fromDTO)
+                .toList();
+    }
+
     private void validateAuction(Auction auction) throws VehicleNotFoundException, VehicleNotUsedException, BadRequestException {
         Vehicle vehicle = vehicleConnector.get(auction.getVehicleId());
         if (vehicle == null)

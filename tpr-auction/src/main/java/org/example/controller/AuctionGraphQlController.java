@@ -26,8 +26,8 @@ public class AuctionGraphQlController {
     }
 
     @QueryMapping
-    Auction auctionById(@Argument Long id) throws NotFoundException {
-        return auctionService.getById(id);
+    List<Auction> auctionByName(@Argument String name) throws NotFoundException {
+        return auctionService.getByName(name);
     }
 
     @MutationMapping

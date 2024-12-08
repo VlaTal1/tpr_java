@@ -1,6 +1,6 @@
 type Query {
     auctions: [Auction!]!
-    auctionById(id: ID!): Auction!
+    auctionByName(name: String!): [Auction!]
 }
 
 type Mutation {
