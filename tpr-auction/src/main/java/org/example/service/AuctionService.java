@@ -74,7 +74,7 @@ public class AuctionService {
         if (auction.getStartTime() == null) {
             auction.setStartTime(Timestamp.valueOf(LocalDateTime.now().plusHours(1)));
         } else {
-            auction.setStartTime(Timestamp.valueOf(auctionInput.startTime().toLocalDateTime()));
+            auction.setStartTime(Timestamp.valueOf(auctionInput.startTime()));
         }
 
         return create(auction);
