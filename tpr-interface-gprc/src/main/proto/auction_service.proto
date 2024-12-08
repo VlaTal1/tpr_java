@@ -8,7 +8,7 @@ option java_multiple_files = true;
 option java_package = "org.example.service";
 
 message CreateAuctionRequest {
-  string vehicle_id = 1;
+  int64 vehicle_id = 1;
   string name = 2;
   int32 bid_timeout_sec = 3;
   float start_price = 4;

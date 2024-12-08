@@ -22,12 +22,12 @@ public class AuctionController {
         auctionService.startAuction(auctionId);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Auction> create(@RequestBody Auction auction) throws VehicleNotFoundException, VehicleNotUsedException, BadRequestException {
         return ResponseEntity.status(HttpStatus.CREATED).body(auctionService.create(auction));
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Auction>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(auctionService.getAll());
     }

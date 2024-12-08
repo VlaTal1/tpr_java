@@ -3,12 +3,14 @@ package org.example.service;
 
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.example.bom.Auction;
 import org.example.bom.AuctionStatus;
 
 @GrpcService
 @RequiredArgsConstructor
+@Slf4j
 public class AuctionGrpcService extends AuctionServiceGrpc.AuctionServiceImplBase {
 
     private final AuctionService auctionService;
@@ -17,7 +19,7 @@ public class AuctionGrpcService extends AuctionServiceGrpc.AuctionServiceImplBas
     public void createAuction(CreateAuctionRequest request, StreamObserver<CreateAuctionResponse> responseObserver) {
         try {
             Auction auction = new Auction();
-            auction.setVehicleId(Long.parseLong(request.getVehicleId()));
+            auction.setVehicleId(request.getVehicleId());
             auction.setName(request.getName());
             auction.setBidTimeoutSec(request.getBidTimeoutSec());
             auction.setStartPrice(request.getStartPrice());
@@ -34,7 +36,7 @@ public class AuctionGrpcService extends AuctionServiceGrpc.AuctionServiceImplBas
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         } catch (Exception e) {
-            // Обработка исключений
+            log.error("Error creating auction with gRPC");
             responseObserver.onError(e);
         }
     }

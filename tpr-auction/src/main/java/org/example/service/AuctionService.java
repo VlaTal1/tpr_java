@@ -14,6 +14,8 @@ import org.example.repository.AuctionRepository;
 import org.example.repository.BidHistoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -47,6 +49,10 @@ public class AuctionService {
 
     public Auction create(Auction auction) throws VehicleNotFoundException, VehicleNotUsedException, BadRequestException {
         validateAuction(auction);
+
+        if (auction.getStartTime() == null) {
+            auction.setStartTime(Timestamp.valueOf(LocalDateTime.now().plusHours(1)));
+        }
 
         Vehicle vehicle = vehicleConnector.get(auction.getVehicleId());
         auction.setName(STR."\{vehicle.getModel().getManufacturer().getName()} \{vehicle.getModel().getName()} \{vehicle.getYear()}");

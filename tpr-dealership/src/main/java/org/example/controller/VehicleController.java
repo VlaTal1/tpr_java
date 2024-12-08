@@ -38,7 +38,8 @@ public class VehicleController {
 
     @GetMapping("/{vehicleId}")
     public ResponseEntity<Vehicle> get(@PathVariable("vehicleId") Long vehicleId) throws VehicleNotFoundException {
-        return ResponseEntity.status(HttpStatus.OK).body(vehicleService.get(vehicleId));
+        Vehicle vehicle = vehicleService.get(vehicleId);
+        return ResponseEntity.status(HttpStatus.OK).body(vehicle);
     }
 
     @PutMapping("/{vehicleId}")
