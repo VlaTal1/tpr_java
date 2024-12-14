@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.bom.Auction;
 import org.example.bom.AuctionStatus;
 import org.example.bom.Vehicle;
-import org.example.connector.VehicleConnector;
 import org.example.connector.VehicleGrpcConnector;
 import org.example.converter.AuctionConverter;
 import org.example.dto.db.AuctionDTO;
@@ -54,7 +53,7 @@ public class AuctionService {
         validateAuction(auction);
         validateVehicle(vehicle, auction.getVehicleId());
 
-        if (auction.getName() == null) {
+        if (auction.getName() == null || auction.getName().isBlank()) {
             auction.setName(STR."\{vehicle.getModel().getManufacturer().getName()} \{vehicle.getModel().getName()} \{vehicle.getYear()}");
         }
 
