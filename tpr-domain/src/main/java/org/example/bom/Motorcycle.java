@@ -10,6 +10,9 @@ public class Motorcycle extends Vehicle {
         super(id, amount, model, color, price, year, isUsed);
     }
 
+    public Motorcycle() {
+    }
+
     @Override
     public int calculateCredit() {
         double loanAmount = getPrice();

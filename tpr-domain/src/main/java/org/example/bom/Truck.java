@@ -12,6 +12,9 @@ public class Truck extends Vehicle {
         super(id, amount, model, color, price, year, isUsed);
     }
 
+    public Truck() {
+    }
+
     @Override
     public int calculateCredit() {
         double loanAmount = getPrice() - fixedDownPayment;

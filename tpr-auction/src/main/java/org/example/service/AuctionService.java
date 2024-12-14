@@ -1,11 +1,11 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Not;
 import org.example.bom.Auction;
 import org.example.bom.AuctionStatus;
 import org.example.bom.Vehicle;
 import org.example.connector.VehicleConnector;
+import org.example.connector.VehicleGrpcConnector;
 import org.example.converter.AuctionConverter;
 import org.example.dto.db.AuctionDTO;
 import org.example.dto.db.BidHistoryDTO;
@@ -33,7 +33,7 @@ public class AuctionService {
 
     private final TimerManager timerManager;
 
-    private final VehicleConnector vehicleConnector;
+    private final VehicleGrpcConnector vehicleGrpcConnector;
 
     public void startAuction(Long auctionId) throws AuctionNotFoundException {
         AuctionDTO auctionDTO = auctionRepository.findById(auctionId).orElseThrow(() -> new AuctionNotFoundException(STR."Auction with id \{auctionId} not found"));
@@ -48,14 +48,18 @@ public class AuctionService {
     }
 
     public Auction create(Auction auction) throws VehicleNotFoundException, VehicleNotUsedException, BadRequestException {
+        Vehicle vehicle = vehicleGrpcConnector.getVehicleById(auction.getVehicleId());
+
         validateAuction(auction);
+        validateVehicle(vehicle, auction.getVehicleId());
 
         if (auction.getStartTime() == null) {
             auction.setStartTime(Timestamp.valueOf(LocalDateTime.now().plusHours(1)));
         }
 
-        Vehicle vehicle = vehicleConnector.get(auction.getVehicleId());
-        auction.setName(STR."\{vehicle.getModel().getManufacturer().getName()} \{vehicle.getModel().getName()} \{vehicle.getYear()}");
+        if (auction.getName() == null) {
+            auction.setName(STR."\{vehicle.getModel().getManufacturer().getName()} \{vehicle.getModel().getName()} \{vehicle.getYear()}");
+        }
 
         AuctionDTO auctionDTO = auctionRepository.save(auctionConverter.toDTO(auction));
         return auctionConverter.fromDTO(auctionDTO);
@@ -74,12 +78,7 @@ public class AuctionService {
         return auctionConverter.fromDTO(auctionDTO.get());
     }
 
-    private void validateAuction(Auction auction) throws VehicleNotFoundException, VehicleNotUsedException, BadRequestException {
-        Vehicle vehicle = vehicleConnector.get(auction.getVehicleId());
-        if (vehicle == null)
-            throw new VehicleNotFoundException(STR."Vehicle with id \{auction.getVehicleId()} not found");
-        if (!vehicle.isUsed())
-            throw new VehicleNotUsedException(STR."Vehicle with id \{auction.getVehicleId()} is not used");
+    private void validateAuction(Auction auction) throws BadRequestException {
         if (auction.getBidTimeoutSec() < 10)
             throw new BadRequestException("Bid timout cannot not be less than 10 seconds!");
         if (auction.getStartPrice() < 0)
@@ -88,6 +87,13 @@ public class AuctionService {
             throw new BadRequestException("Minimum bid cannot be less than 50!");
         if (auction.getAuctionStatus() != AuctionStatus.OPENED)
             throw new BadRequestException("New auction can only have status OPENED!");
+    }
+
+    private void validateVehicle(Vehicle vehicle, Long vehicleId) throws VehicleNotFoundException, VehicleNotUsedException {
+        if (vehicle == null)
+            throw new VehicleNotFoundException(STR."Vehicle with id \{vehicleId} not found");
+        if (!vehicle.isUsed())
+            throw new VehicleNotUsedException(STR."Vehicle with id \{vehicleId} is not used");
     }
 
     private void startAuctionTimer(Auction auction) {
@@ -111,10 +117,11 @@ public class AuctionService {
         }
     }
 
-    protected void endAuction(Long auctionId) throws AuctionNotFoundException {
+    public void endAuction(Long auctionId) throws AuctionNotFoundException {
         AuctionDTO auctionDTO = auctionRepository.findById(auctionId).orElseThrow(() -> new AuctionNotFoundException(STR."Auction with id \{auctionId} not found"));
         List<BidHistoryDTO> bidHistoryDTO = bidHistoryRepository.findAllByAuction(auctionDTO);
         auctionDTO.setAuctionStatus(bidHistoryDTO.isEmpty() ? AuctionStatus.CLOSED.name() : AuctionStatus.ENDED.name());
+        vehicleGrpcConnector.markVehicleAsSold(auctionDTO.getVehicleId());
         auctionRepository.save(auctionDTO);
         timerManager.cancelTimer(auctionId);
     }

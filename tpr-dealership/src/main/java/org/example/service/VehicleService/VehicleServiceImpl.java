@@ -119,6 +119,13 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
+    public void vehicleSold(Long vehicleId) throws VehicleNotFoundException {
+        VehicleDTO vehicleDTO = getById(vehicleId);
+        vehicleDTO.setAmount(vehicleDTO.getAmount() - 1);
+        vehicleRepository.save(vehicleDTO);
+    }
+
+    @Override
     public Vehicle findById(Long id) throws NotFoundException {
         VehicleDTO vehicleDTO = vehicleRepository.findById(id).orElseThrow(() -> new NotFoundException(STR."Vehicle with id \{id} not found"));
         return vehicleConverter.fromDTO(vehicleDTO);

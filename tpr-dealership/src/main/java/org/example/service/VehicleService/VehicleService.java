@@ -26,4 +26,6 @@ public interface VehicleService {
     Vehicle get(Long vehicleId) throws VehicleNotFoundException;
 
     Vehicle delete(Long vehicleId) throws VehicleNotFoundException;
+
+    void vehicleSold(Long vehicleId) throws VehicleNotFoundException;
 }

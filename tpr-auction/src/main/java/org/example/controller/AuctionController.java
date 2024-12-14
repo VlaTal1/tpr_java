@@ -22,6 +22,11 @@ public class AuctionController {
         auctionService.startAuction(auctionId);
     }
 
+    @PostMapping("/{auctionId}/end")
+    public void endAuction(@PathVariable Long auctionId) throws AuctionNotFoundException {
+        auctionService.endAuction(auctionId);
+    }
+
     @PostMapping
     public ResponseEntity<Auction> create(@RequestBody Auction auction) throws VehicleNotFoundException, VehicleNotUsedException, BadRequestException {
         return ResponseEntity.status(HttpStatus.CREATED).body(auctionService.create(auction));

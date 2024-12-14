@@ -22,5 +22,7 @@ logging:
 dealership-url: http://127.0.0.1:8080/api
 
 grpc:
-  server:
-    port: 9090
+  client:
+    vehicle:
+      address: static://localhost:9090
+      negotiation-type: plaintext
