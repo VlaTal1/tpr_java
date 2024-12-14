@@ -1,7 +1,6 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Not;
 import org.example.bom.Auction;
 import org.example.bom.AuctionStatus;
 import org.example.bom.Vehicle;
@@ -9,11 +8,14 @@ import org.example.connector.VehicleConnector;
 import org.example.converter.AuctionConverter;
 import org.example.dto.db.AuctionDTO;
 import org.example.dto.db.BidHistoryDTO;
+import org.example.dto.web.graphQl.AuctionInput;
 import org.example.exception.*;
 import org.example.repository.AuctionRepository;
 import org.example.repository.BidHistoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -49,10 +51,33 @@ public class AuctionService {
         validateAuction(auction);
 
         Vehicle vehicle = vehicleConnector.get(auction.getVehicleId());
-        auction.setName(STR."\{vehicle.getModel().getManufacturer().getName()} \{vehicle.getModel().getName()} \{vehicle.getYear()}");
+
+        if (auction.getName() == null) {
+            auction.setName(STR."\{vehicle.getModel().getManufacturer().getName()} \{vehicle.getModel().getName()} \{vehicle.getYear()}");
+        }
 
         AuctionDTO auctionDTO = auctionRepository.save(auctionConverter.toDTO(auction));
         return auctionConverter.fromDTO(auctionDTO);
+    }
+
+    public Auction create(AuctionInput auctionInput) throws VehicleNotFoundException, VehicleNotUsedException, BadRequestException {
+        Auction auction = Auction.builder()
+                .name(auctionInput.name())
+                .vehicleId(auctionInput.vehicleId())
+                .bidTimeoutSec(auctionInput.bidTimeoutSec())
+                .startPrice(auctionInput.startPrice())
+                .minBid(auctionInput.minBid())
+                .build();
+
+        auction.setAuctionStatus(AuctionStatus.OPENED);
+
+        if (auction.getStartTime() == null) {
+            auction.setStartTime(Timestamp.valueOf(LocalDateTime.now().plusHours(1)));
+        } else {
+            auction.setStartTime(Timestamp.valueOf(auctionInput.startTime()));
+        }
+
+        return create(auction);
     }
 
     public List<Auction> getAll() {
@@ -66,6 +91,16 @@ public class AuctionService {
             throw new NotFoundException(STR."Auction with id \{auctionId} not found");
         }
         return auctionConverter.fromDTO(auctionDTO.get());
+    }
+
+    public List<Auction> getByName(String name) throws NotFoundException {
+        List<AuctionDTO> auctionDTOs = auctionRepository.findByNameContaining(name);
+        if (auctionDTOs.isEmpty()) {
+            throw new NotFoundException(String.format("No auctions found containing name: %s", name));
+        }
+        return auctionDTOs.stream()
+                .map(auctionConverter::fromDTO)
+                .toList();
     }
 
     private void validateAuction(Auction auction) throws VehicleNotFoundException, VehicleNotUsedException, BadRequestException {
