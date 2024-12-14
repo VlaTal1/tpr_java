@@ -1,0 +1,35 @@
+type Query {
+    auctions: [Auction!]!
+    auctionByName(name: String!): [Auction!]
+}
+
+type Mutation {
+    addAuction(auction: AuctionInput): Auction
+}
+
+input AuctionInput {
+    name: String!
+    vehicleId: ID!
+    startTime: String    # If not provided than current time + 1 hour is set
+    bidTimeoutSec: Int!
+    startPrice: Float!
+    minBid: Float!
+}
+
+type Auction {
+    id: ID!
+    name: String!
+    vehicleId: ID!
+    startTime: String!
+    bidTimeoutSec: Int!
+    startPrice: Float!
+    minBid: Float!
+    auctionStatus: AuctionStatus!
+}
+
+enum AuctionStatus {
+    OPENED
+    STARTED
+    ENDED
+    CLOSED
+}
